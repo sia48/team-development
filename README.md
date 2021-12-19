@@ -1,4 +1,42 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Name
+ 
+BP_Calendar
+BP..balance of payments 
+
+# Features
+ 
+収支管理機能付きのカレンダー
+ 
+# Environment
+
+1. composer create-project laravel/laravel BP_Calendar で実行
+2. DB「bp_calendar」作成
+3. .envファイルのコピー「.env copy」作成（DB名の変更済み）
+4. app.php内のタイムゾーンとロケールの変更
+5. migrate実施
+6. php artisan serveで初期ページ確認
+7. リモートリポジトリにプッシュ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -64,3 +102,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+ -->
