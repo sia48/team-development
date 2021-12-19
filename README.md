@@ -14,7 +14,7 @@ BP..balance of payments
 3. .envファイルのコピー「.env copy」作成（DB名の変更済み）
 4. app.php内のタイムゾーンとロケールの変更
 5. migrate実施
-6. php artisan serveで初期ページ確認
+6. php artisan serveで初期ページを確認
 7. リモートリポジトリにプッシュ
 
 
