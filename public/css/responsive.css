@@ -1,0 +1,440 @@
+@media (max-width: 1200px) {
+    .my-icon {
+        width: 60px;
+    }
+
+    .my-name a {
+        font-size: 18px;
+    }
+
+    .my-name a:hover {
+        font-size: 20px;
+    }
+
+    .my-group a {
+        font-size: 14px;
+    }
+
+    .my-group a:hover {
+        font-size: 16px;
+    }
+
+    .nav li {
+        width: 80px;
+    }
+
+    .nav li a {
+        font-size: 12px;
+    }
+
+    .aside {
+        width: 100px;
+    }
+
+    .aside p {
+        font-size: 14px;
+    }
+
+    .aside li {
+        border-left: solid 4px orange;
+        margin-top: 10px;
+        line-height: 0.5;
+        padding: 0.5em;
+    }
+
+    .aside li a {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    .main {
+        width: calc(100% - 120px);
+    }
+
+    .nav-calendar {
+        align-items: center;
+    }
+
+    .nav-calendar a, p {
+        font-size: 12px;
+    }
+
+    .nav-calendar-left a {
+        padding: 1px;
+    }
+
+    .nav-calendar-left .prev, .nav-calendar-left .next, .nav-calendar-left .today {
+        font-size: 8px;
+    }
+
+    .income, .spending, .total {
+        margin-right: 10px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .calendar-head h1 {
+        font-size: 48px;
+        margin-right: 20px;
+    }
+
+    .calendar-head h2 {
+        font-size: 18px;
+        line-height: 1.3;
+    }
+
+    .this-month {
+        margin-top: 5px;
+    }
+
+    .this-month th {
+        height: 1px;
+        font-size: 12px;
+    }
+
+    .this-month td {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 900px) {
+    .nav.pc {
+        display: none;
+    }
+
+    .nav.sp {
+        position: relative;
+        background: black;
+        cursor: pointer;
+        width: 60px;
+        height: 55px;
+        border-radius: 5px;
+        display: block;
+    }
+
+    .nav.sp ul {
+        transform: translate(767px);
+        transition: all 0.5s;
+    }
+
+    .nav.sp span {
+        display: inline-block;
+        transition: all .4s;
+        position: absolute;
+        left: 16.5px;
+        height: 3px;
+        border-radius: 5px;
+        background: white;
+        width: 45%;
+    }
+
+    .nav.sp span:nth-of-type(1) {
+        top: 14px;
+    }
+
+    .nav.sp span:nth-of-type(2) {
+        top: 22px;
+    }
+
+    .nav.sp span:nth-of-type(3) {
+        top: 30px;
+    }
+
+    .nav.sp span:nth-of-type(3)::after {
+        content: "Menu";
+        position: absolute;
+        top: 7px;
+        left: -1px;
+        color: #fff;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+    }
+
+    .nav.sp.active span:nth-of-type(1) {
+        top: 16px;
+        left: 20px;
+        transform: translateY(6px) rotate(-45deg);
+        width: 30%;
+    }
+
+    .nav.sp.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+
+    .nav.sp.active span:nth-of-type(3) {
+        top: 28px;
+        left: 20px;
+        transform: translateY(-6px) rotate(45deg);
+        width: 30%;
+    }
+
+    .nav.sp.active span:nth-of-type(3)::after {
+        content: "Close";
+        transform: translateY(0) rotate(-45deg);
+        top: 5px;
+        left: 4px;
+    }
+
+    nav.sp ul.active {
+        z-index: 10;
+        cursor: pointer;
+        position: fixed;
+        top: 60px;
+        right: 1px;
+        width: 60%;
+        height: calc(100vh - 60px);
+        background: black;
+        display: flex;
+        flex-wrap: wrap;
+        transform: translateZ(0);
+        transition: all 0.5s;
+    }
+
+    nav.sp li {
+        width: 50%;
+        height: auto;
+        margin-left: 0;
+        border-radius: 0;
+    }
+
+    nav.sp li:nth-child(odd) {
+        border-right: 1px solid ghostwhite;
+    }
+
+    .nav.sp li a {
+        display: block;
+        font-size: 20px;
+        line-height: 2;
+    }
+
+    .nav.sp li i {
+        display: block;
+        font-size: 60px;
+        padding-top: 40px;
+        line-height: 1.5;
+    }
+
+    .aside {
+        display: none;
+    }
+
+    .income, .spending, .total {
+        margin-right: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .main {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .my-icon {
+        width: 50px;
+    }
+
+    .my-name a {
+        font-size: 16px;
+    }
+
+    .my-name a:hover {
+        font-size: 18px;
+        transition: 0.5s;
+    }
+
+    .my-group a {
+        text-decoration: underline;
+        font-size: 12px;
+    }
+
+    .my-group a:hover {
+        font-size: 14px;
+        transition: 0.5s;
+    }
+
+    .main-container {
+        max-width: 98%;
+    }
+
+    .nav-calendar {
+        position: relative;
+    }
+
+    .nav-calendar-right {
+        position: absolute;
+        top: 135%;
+        right: 1%;
+    }
+
+    .calendar-head-left {
+        align-items: center;
+        position: relative;
+        top: 6px;
+    }
+
+    .calendar-head-left h1 {
+        font-size: 36px;
+        margin-right: 14px;
+    }
+
+    .calendar-head-left h2 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header .container {
+        max-width: calc(100% - 40px);
+    }
+
+    .my-icon {
+        width: 40px;
+    }
+
+    .my-name a {
+        font-size: 12px;
+    }
+
+    .my-name a:hover {
+        font-size: 14px;
+        transition: 0.5s;
+    }
+
+    .my-group a {
+        text-decoration: underline;
+        font-size: 8px;
+    }
+
+    .my-group a:hover {
+        font-size: 10px;
+        transition: 0.5s;
+    }
+
+    .nav.sp {
+        width: 50px;
+        height: 45px;
+    }
+
+    .nav.sp span {
+        left: 14px;
+        height: 2px;
+        border-radius: 5px;
+        background: white;
+        width: 45%;
+    }
+
+    .nav.sp span:nth-of-type(1) {
+        top: 10px;
+    }
+
+    .nav.sp span:nth-of-type(2) {
+        top: 18px;
+    }
+
+    .nav.sp span:nth-of-type(3) {
+        top: 26px;
+    }
+
+    .nav.sp span:nth-of-type(3)::after {
+        top: 5px;
+        left: -3.5px;
+    }
+
+    .nav.sp.active span:nth-of-type(1) {
+        top: 12px;
+        left: 18px;
+        transform: translateY(6px) rotate(-45deg);
+        width: 30%;
+    }
+
+    .nav.sp.active span:nth-of-type(3) {
+        top: 24px;
+        left: 18px;
+        transform: translateY(-6px) rotate(45deg);
+        width: 30%;
+    }
+
+    .nav.sp.active span:nth-of-type(3)::after {
+        content: "Close";
+        transform: translateY(0) rotate(-45deg);
+        top: 5px;
+        left: 1px;
+    }
+
+    .nav.sp ul.active {
+        top: 50px;
+        height: calc(100% - 50px);
+        padding-top: 1px;
+    }
+
+    .nav.sp li {
+        width: 100%;
+        border-bottom: 1px solid ghostwhite;
+    }
+
+    .nav.sp li a {
+        font-size: 14px;
+    }
+
+    .nav.sp li i {
+        font-size: 30px;
+        padding-top: 30px;
+    }
+
+    form {
+        display: inline-block;
+    }
+
+    .main-container {
+        max-width: 100%;
+        height: calc(100vh - 60px);
+        margin-top: 5px;
+    }
+
+    .main {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .calendar {
+        padding: 0 2px;
+    }
+
+    .nav-calendar-left {
+        display: none;
+    }
+
+    .nav-calendar-left.sp {
+        display: block;
+    }
+
+    select {
+        border-radius: 5px;
+        border: 1px solid #bbbbbb;
+        background: white;
+        width: 60px;
+        position: relative;
+    }
+
+    .calendar-head {
+        margin-top: 0;
+    }
+
+    .calendar-head-left h1 {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    .calendar-head-left h2 {
+        font-size: 10px;
+    }
+
+    .income, .spending, .total {
+        font-size: 10px;
+        padding: 0;
+    }
+
+    .nav-calendar-right {
+        top: 120%;
+    }
+}

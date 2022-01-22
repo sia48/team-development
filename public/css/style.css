@@ -1,0 +1,531 @@
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/*///////////////////////////////////////////////*/
+/* header */
+.header {
+    overflow-x: hidden;
+}
+
+.header a {
+    text-decoration: none;
+}
+
+.header li {
+    list-style: none;
+}
+
+header .container {
+    width: 1280px;
+    max-width: calc(100% - 120px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.me {
+    display: flex;
+    align-items: center;
+}
+
+.my-icon {
+    width: 70px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.my-icon img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.my-name a {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.my-name a:hover {
+    font-size: 22px;
+    transition: 0.5s;
+}
+
+.my-group a {
+    color: black;
+    text-decoration: underline;
+}
+
+.my-group a:hover {
+    font-size: 18px;
+    transition: 0.5s;
+}
+
+.sp {
+    display: none;
+}
+
+.nav.pc ul {
+    display: flex;
+}
+
+.nav li {
+    background: green;
+    width: 100px;
+    height: 60px;
+    border-radius: 8px;
+    line-height: 60px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.nav .group {
+    line-height: 20px;
+    padding-top: 10px;
+}
+
+.nav a {
+    color: white;
+}
+
+.nav .mf {
+    background: orange;
+}
+
+.nav .logout {
+    background: royalblue;
+}
+
+.nav li:hover {
+    opacity: 0.8;
+    transition: 0.5s;
+}
+
+/*main-container*/
+.main-container {
+    width: 100vw;
+    max-width: calc(100% - 40px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    height: calc(100vh - 100px);
+}
+
+/*aside*/
+.aside {
+    width: 150px;
+    box-shadow: 0 0 5px;
+    border-radius: 8px;
+}
+
+.aside p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-style: italic;
+    font-family: Times New Roman, "ＭＳ Ｐゴシック";
+}
+
+.aside ul {
+    margin-left: 15px;
+}
+
+.aside li {
+    list-style: none;
+    color: black;
+    border-left: solid 8px orange;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    padding: 0.5em;
+}
+
+.aside li a {
+    color: black;
+    text-decoration: none;
+    padding: 0 .3em;
+    background-image: linear-gradient(to right, white 50%, orange 50%);
+    background-position: 0 0;
+    background-size: 200% auto;
+    transition: .3s;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+aside li a:hover {
+    background-position: -100% 0;
+    color: white;
+}
+
+.main {
+    width: calc(100% - 170px);
+    border-radius: 8px;
+    box-shadow: 0 0 5px;
+    overflow: hidden;
+}
+
+.nav-calendar {
+    display: flex;
+    justify-content: space-between;
+    background: aliceblue;
+    padding: 5px;
+    height: 10%;
+    align-items: center;
+}
+
+.nav-calendar-left.sp {
+    display: none;
+}
+
+.nav-calendar-left p {
+    display: inline-block;
+}
+
+.nav-calendar-left a {
+    color: black;
+    text-decoration: none;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.nav-calendar-left a:hover {
+    background: #b9cdf1;
+}
+
+.this_month_color {
+    background: #b9cdf1;
+}
+
+.this_year_color {
+    background: #b9cdf1;
+}
+
+.nav-calendar-left .today {
+    margin-left: 10px;
+    color: ghostwhite;
+    font-weight: bold;
+    font-size: 12px;
+    background: #adb5ec;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.nav-calendar-left .prev {
+    margin-left: 10px;
+    color: ghostwhite;
+    font-weight: bold;
+    font-size: 12px;
+    background: #adb5ec;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.nav-calendar-left .next {
+    color: ghostwhite;
+    font-weight: bold;
+    font-size: 12px;
+    background: #adb5ec;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.nav-calendar-right {
+    display: flex;
+}
+
+.nav-calendar-right a {
+    color: black;
+    text-decoration: none;
+}
+
+.income, .spending, .total {
+    margin-right: 20px;
+    padding: 2px 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.income:hover, .spending:hover, .total:hover {
+    background: #b9cdf1;
+    transition: all 0.5s;
+}
+
+.calendar {
+    padding: 10px;
+    height: 100%;
+}
+
+.calendar-head {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.calendar-head-left {
+    display: flex;
+    align-items: end;
+}
+
+.calendar-head-left h1 {
+    font-size: 60px;
+    margin-right: 40px;
+    line-height: 45px;
+}
+
+.calendar-en {
+    line-height: 25px;
+}
+
+.calendar-head-right {
+    display: flex;
+    display: none;
+    /*デザイン的に窮屈になる*/
+}
+
+.next-month-head {
+    margin-right: 20px;
+    text-align: center;
+}
+
+.next-month-head h3 {
+    font-size: 28px;
+}
+
+.next-month {
+    font-size: 10px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+.next-month th {
+    background: beige;
+}
+
+th, td {
+    text-align: center;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+th {
+    height: 30px;
+}
+
+.this-month {
+    margin-top: 10px;
+    width: 100%;
+    height: 78%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.this-month th {
+    background: beige;
+}
+
+.this-month td {
+    text-align: left;
+    vertical-align: text-top;
+}
+
+.this-month td:first-child,
+.this-month th:first-child {
+    color: red;
+}
+
+.this-month td:last-child,
+.this-month th:last-child {
+    color: blue;
+}
+
+.this-month .td {
+    height: 1px;
+}
+
+.today {
+    background: orange;
+}
+
+.not_this_month {
+    background: rgb(224, 224, 224);
+}
+
+.cell_link {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#holiday {
+    color: red;
+}
+
+.modal {
+    background: ghostwhite;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 50%;
+    height: 70vh;
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 0 5px;
+}
+
+.modal span {
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+}
+
+.contents {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_icon {
+    width: 20%;
+}
+
+.user_icon img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.details {
+    width: 70%;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+}
+
+.detail textarea {
+    width: 100%;
+    resize: none;
+    height: 30vh;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.detail .textarea_edit {
+    height: auto;
+    min-height: 18vh;
+    margin-right: 20px;
+}
+
+.modal button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 48%;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    opacity: 0.7;
+    transition: all 0.5s;
+}
+
+.modal .button {
+    width: 70%;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.button .close {
+    background: skyblue;
+}
+
+.button .submit {
+    background: orange;
+}
+
+#edit.modal .link_edit {
+    width: 90%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    background: limegreen;
+}
+
+#edit.modal .link_delete {
+    width: 90%;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    background: darkred
+}
+
+#edit.modal .button {
+    margin-top: 20%;
+    text-align: right;
+}
+
+#update_delete .links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#update_delete .detail {
+    display: block;
+}
+
+#update_delete .link_update {
+    background: orange;
+}
+
+#update_delete button.close {
+    background: skyblue;
+}
+
+#delete h2 {
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#delete .delete {
+    background: red;
+}
+
+#delete button.close {
+    background: skyblue;
+}
+
+.modal .day {
+    background: ghostwhite;
+    border: none;
+    outline: none;
+    color: black;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal textarea {
+    outline: none;
+}

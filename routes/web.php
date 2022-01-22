@@ -23,14 +23,16 @@ Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
 Route::get('/', function () {
     return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
 });
-Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')->name('calender');
+Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')->name('calendar');
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
 // プロフィール画面
 Route::get('/profile','App\Http\Controllers\UserController@profile')->name('profile');
 
 // スケジュール登録画面
-Route::get('/store','App\Http\Controllers\UserController@store')->name('store');
+Route::post('/store/{year}/{month}','App\Http\Controllers\ShowController@store')->name('store');
+Route::post('/edit/{year}/{month}/{id}', 'App\Http\Controllers\ShowController@edit')->name('edit'); 
+Route::post('/delete/{year}/{month}/{id}', 'App\Http\Controllers\ShowController@destroy')->name('delete');
 
 // グループ作成画面
 Route::get('/group','App\Http\Controllers\GroupController@group')->name('group');
