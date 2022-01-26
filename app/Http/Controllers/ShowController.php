@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Carbon\Carbon; //日付のライブラリ
 use Yasumi\Yasumi; //祝日取得のライブラリ

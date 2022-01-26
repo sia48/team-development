@@ -135,7 +135,7 @@
                             </select>
                         </form>
                         @if($month != date('n') || $year != date('Y'))
-                                <a href="{{ route('calendar', ['year' => date('Y'), 'month' => date('n')]) }}" class="today">今月へ</a>
+                            <a href="{{ route('calendar', ['year' => date('Y'), 'month' => date('n')]) }}" class="today">今月へ</a>
                         @endif
                     </div>
                     <div class="months">
@@ -270,9 +270,7 @@
                     @foreach($dates as $date)
                         @if($date->dayOfWeek == 0)
                             <tr>
-                        @endif
-                        <!-- if $date->month != $month → その日がその月に属さない場合はクラス付与 -->
-                        
+                        @endif                        
                             <td
                                 @if($date->month != $month) 
                                     class="not_this_month"

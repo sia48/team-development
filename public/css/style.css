@@ -344,13 +344,12 @@ th {
     vertical-align: text-top;
 }
 
-.this-month td:first-child,
+.this-month td:first-child a,
 .this-month th:first-child {
     color: red;
 }
 
-.this-month td:last-child,
-.this-month th:last-child {
+.this-month td:last-child a, .this-month th:last-child {
     color: blue;
 }
 

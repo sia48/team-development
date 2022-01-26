@@ -25,7 +25,7 @@ class SchedulesTableSeeder extends Seeder
        for($i = 0; $i < 30; $i++) {
             $date = rand($min, $max);
             $timestamp = date('Y-m-d', $date);
-            $date = date('Y年n月d日', $date);            
+            $date = date('Y年n月j日', $date);            
             DB::table('schedules')->insert([
                 'user_id' => rand(1, 3),
                 'schedule' => Str::random(15),

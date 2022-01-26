@@ -29,13 +29,18 @@ Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->
 // プロフィール画面
 Route::get('/profile','App\Http\Controllers\UserController@profile')->name('profile');
 
-// スケジュール登録画面
+// スケジュール画面
 Route::post('/store/{year}/{month}','App\Http\Controllers\ShowController@store')->name('store');
 Route::post('/edit/{year}/{month}/{id}', 'App\Http\Controllers\ShowController@edit')->name('edit'); 
 Route::post('/delete/{year}/{month}/{id}', 'App\Http\Controllers\ShowController@destroy')->name('delete');
 
-// グループ作成画面
+// グループ画面に遷移する
 Route::get('/group','App\Http\Controllers\GroupController@group')->name('group');
+Route::post('/group_store','App\Http\Controllers\GroupController@store')->name('group_store');
+Route::get('/group_show','App\Http\Controllers\GroupController@show')->name('group_show');
+Route::get('/group/detail/{id}','App\Http\Controllers\GroupController@detail')->name('group_detail');
+Route::post('/group/update/{id}','App\Http\Controllers\GroupController@update')->name('group_update');
+Route::post('/group/delete/{id}','App\Http\Controllers\GroupController@destroy')->name('group_delete');
 
 // ホーム画面（家計簿）
 Route::get('/home','App\Http\Controllers\MoneyController@home')->name('home');
