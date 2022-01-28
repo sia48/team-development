@@ -20,19 +20,24 @@
                 </div>
                 <div class="my-user">
                     <div class="my-name">
-                        <a href="">チーム太郎</a>
+                        <a href="">{{ $user->name }}</a>
                     </div>
                     <div class="my-group">
-                        <a href="">所属グループ</a>
+                        <a href="">{{ $user->group_id }}</a>
                     </div>
                 </div>
             </div>  
             <nav class="nav pc">
                 <ul>
-                    <li class="group"><a href="">グループ<br>作成</a></li>
-                    <li class="group"><a href="">グループ<br>切り替え</a></li>
+                    <li class="group"><a href="{{ route('group') }}">グループ<br>作成</a></li>
+                    <li class="group"><a href="{{ route('group_show') }}">グループ<br>切り替え</a></li>
                     <li class="mf"><a href="">MF画面へ</a></li>
-                    <li class="logout"><a href="">ログアウト</a></li>
+                    <li class="logout">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit">ログアウト</button>
+                        </form>
+                    </li>
                 </ul>
             </nav> 
             <nav class="nav sp">
@@ -42,10 +47,16 @@
                     <span></span>
                 </div>
                 <ul>
-                    <li><a href=""><i class="fas fa-users-cog"></i>グループ作成</a></li>
-                    <li><a href=""><i class="fas fa-users"></i>グループ切り替え</a></li>
+                    <li><a href="{{ route('group') }}"><i class="fas fa-users-cog"></i>グループ作成</a></li>
+                    <li><a href="{{ route('group_show') }}"><i class="fas fa-users"></i>グループ切り替え</a></li>
                     <li class="mf"><a href=""><i class="fas fa-money-check-alt"></i>MF画面へ</a></li>
-                    <li class="logout"><a href=""><i class="fas fa-sign-out-alt"></i>ログアウト</a></li>
+                    <li class="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit">ログアウト</button>
+                        </form>
+                    </li>
                     <li><a href=""><i class="far fa-calendar-alt"></i>今月の予定</a></li>
                 </ul>
             </nav> 
