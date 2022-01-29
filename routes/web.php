@@ -20,9 +20,9 @@ Route::get('/user','App\Http\Controllers\UserController@user')->name('user');
 Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
 
 // ホーム画面（スケジュール）
-Route::get('/', function () {
-    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
-});
+//Route::get('/', function () {
+//    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
+//});
 Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')->name('calendar');
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
@@ -47,3 +47,11 @@ Route::get('/home','App\Http\Controllers\MoneyController@home')->name('home');
 
 // MF登録画面
 Route::get('/money','App\Http\Controllers\MoneyController@money')->name('money');
+
+//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//    return view('dashboard');
+//})->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
+})->name('dashboard');
