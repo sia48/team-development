@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 会員登録画面
-Route::get('/user','App\Http\Controllers\UserController@user')->name('user');
+// Route::get('/user','App\Http\Controllers\UserController@user')->name('user');
 
 // ログイン画面
-Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
+// Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
 
 // ホーム画面（スケジュール）
 Route::get('/', function () {
@@ -27,7 +27,7 @@ Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
 // プロフィール画面
-Route::get('/profile','App\Http\Controllers\UserController@profile')->name('profile');
+// Route::get('/profile','App\Http\Controllers\UserController@profile')->name('profile');
 
 // スケジュール画面
 Route::post('/store/{year}/{month}','App\Http\Controllers\ShowController@store')->name('store');
@@ -43,7 +43,15 @@ Route::post('/group/update/{id}','App\Http\Controllers\GroupController@update')-
 Route::post('/group/delete/{id}','App\Http\Controllers\GroupController@destroy')->name('group_delete');
 
 // ホーム画面（家計簿）
-Route::get('/home','App\Http\Controllers\MoneyController@home')->name('home');
+Route::get('/', function () {
+    return redirect()->route('suito', ['year' => date('Y'), 'month' => date('n')]);
+});
+Route::get('/suito/{year}/{month}','App\Http\Controllers\SuitoController@showSuito')->name('suito');
 
 // MF登録画面
-Route::get('/money','App\Http\Controllers\MoneyController@money')->name('money');
+Route::post('/suito_store/{year}/{month}','App\Http\Controllers\SuitoController@suitoStore')->name('suito_store');
+Route::post('/suito_edit/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitoedit')->name('suito_edit'); 
+Route::post('/suito_delete/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitodestroy')->name('suito_delete');
+
+// MF登録合計表示
+Route::get('/suitos/{year}/{month}','App\Http\Controllers\SuitoController@suitoIncome');
