@@ -397,6 +397,7 @@ th {
     border-radius: 25px;
     padding: 20px;
     box-shadow: 0 0 5px;
+    display: none;
 }
 
 .modal span {

@@ -9,7 +9,7 @@
     <!-- <link rel="icon" href=""> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>ホ-ム</title>
+    <title>ホ-ム（MF）</title>
 </head>
 <body>
     <header class="header">
@@ -20,24 +20,19 @@
                 </div>
                 <div class="my-user">
                     <div class="my-name">
-                        <a href="">{{ $user->name }}</a>
+                        <a href="">チーム太郎</a>
                     </div>
                     <div class="my-group">
-                        <a href="">{{ $user->group_id }}</a>
+                        <a href="">所属グループ</a>
                     </div>
                 </div>
             </div>  
             <nav class="nav pc">
                 <ul>
-                    <li class="group"><a href="{{ route('group') }}">グループ<br>作成</a></li>
-                    <li class="group"><a href="{{ route('group_show') }}">グループ<br>切り替え</a></li>
-                    <li class="mf"><a href="{{ route('suito',['year' => $year,'month' => $month]) }}">MF画面へ</a></li>
-                    <li class="logout">
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button type="submit">ログアウト</button>
-                        </form>
-                    </li>
+                    <li class="group"><a href="">グループ<br>作成</a></li>
+                    <li class="group"><a href="">グループ<br>切り替え</a></li>
+                    <li class="mf"><a href="{{ route('calendar',['year' => $year,'month' => $month]) }}">ホーム画面へ</a></li>
+                    <li class="logout"><a href="">ログアウト</a></li>
                 </ul>
             </nav> 
             <nav class="nav sp">
@@ -47,16 +42,10 @@
                     <span></span>
                 </div>
                 <ul>
-                    <li><a href="{{ route('group') }}"><i class="fas fa-users-cog"></i>グループ作成</a></li>
-                    <li><a href="{{ route('group_show') }}"><i class="fas fa-users"></i>グループ切り替え</a></li>
-                    <li class="mf"><a href="{{ route('suito',['year' => $year,'month' => $month]) }}"><i class="fas fa-money-check-alt"></i>ホーム画面へ</a></li>
-                    <li class="logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            <button type="submit">ログアウト</button>
-                        </form>
-                    </li>
+                    <li><a href=""><i class="fas fa-users-cog"></i>グループ作成</a></li>
+                    <li><a href=""><i class="fas fa-users"></i>グループ切り替え</a></li>
+                    <li class="mf"><a href="{{ route('calendar',['year' => $year,'month' => $month]) }}"><i class="fas fa-money-check-alt"></i>ホーム画面へ</a></li>
+                    <li class="logout"><a href=""><i class="fas fa-sign-out-alt"></i>ログアウト</a></li>
                     <li><a href=""><i class="far fa-calendar-alt"></i>今月の予定</a></li>
                 </ul>
             </nav> 
@@ -183,7 +172,7 @@
                 <div class="nav-calendar-right">
                     <div class="income">
                         <p><a href="">今月の収入</a></p>
-                        <span>￥123,456</span>
+                        <span>1234</span>
                     </div>
                     <div class="spending">
                         <p><a href="">今月の支出</a></p>
@@ -294,7 +283,7 @@
                                 <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
                                 <?php $js_year = $date->year;?>
                                 <?php $js_month = $date->month;?>
-                                <a class="cell_link {{ $js_year }} {{ $js_month }}" 
+                                <a class="cell_link {{ $js_year }} {{ $js_month }}"
                                     @if($holidays->isHoliday($date))
                                         id="holiday"
                                     @endif
@@ -310,6 +299,9 @@
                                             {{-- 2年先の取得もしくは過去の取得はエラーになる(ただし色塗りは別のライブラリを使用しているから対応できる) --}}
                                         @endif
                                     @endif
+                                    <div class="suito">
+                                        <p name="money">合計金額</p>
+                                    </div>
                                 </a>
                             </td>
                             
@@ -323,17 +315,40 @@
     </div>
 
     <div class="modal" id="create"> <!-- 新規登録のモーダル -->
-        <form action="{{ route('store', ['year' => $year, 'month' => $month]) }}" method="post">
+        <form action="{{ route('suito_store', ['year' => $year, 'month' => $month]) }}" method="post">
             @csrf
-            <input type="text" name="schedule_date" value="" class="day">
+            <input type="text" name="suito_date" value="" class="day">
             <span class="close">x</span>
             <div class="contents">
                 <div class="user_icon">
                     <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
                 </div>
                 <div class="details">
-                    <div class="detail">
-                        <textarea name="schedule"></textarea>
+                    <!-- カテゴリー選択 -->
+                    <div class="categories">
+                        <label for="category-id">{{ __('カテゴリー') }}</label>
+                        <select id='category' name='category'>
+                            @foreach(config('categories') as $category_id => $name)
+                                <option value="{{ $category_id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- 収支選択 -->
+                    <div class="suito">
+                        <label for="suito-id">{{ __('収支') }}</label>
+                        <select name="flag">
+                            @foreach(config('suitos') as $suito_id => $name)
+                                    <option value="{{ $suito_id }}">{{ $name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- 金額入力 -->
+                    <div class="money">
+                        <label for="money-id">{{ __('金額') }}</label>
+                        <div class="price">
+                            <input type="tel" id='money' name='money'>
+                            <p>円</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,15 +367,41 @@
                 <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
             </div>
             <div class="details">
-                <div class="detail">
-                    <textarea class="textarea_edit" id="textarea_edit" name="schedule" placeholder="" disabled></textarea>
-                    <!-- 自分のIDなら編集削除ボタンを表示 -->
-                        <div class="links">
-                            <button type="text" class="link_edit">編集する</button>
-                            <button type="text" class="link_delete">削除する</button>
+                <form action="{{ route('suito_store', ['year' => $year, 'month' => $month]) }}" method="post">
+                    @csrf
+                    <div class="detail">
+                        <!-- カテゴリー選択 -->
+                        <div class="categories">
+                            <label for="category-id">{{ __('カテゴリー') }}</label>
+                            <select id='category'>
+                                @foreach(config('categories') as $category_id => $name)
+                                    <option value="{{ $category_id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    <!-- ここまで -->
-                </div>
+                        <!-- 収支選択 -->
+                        <div class="suito">
+                            <label for="suito-id">{{ __('収支') }}</label>
+                            <select>
+                                @foreach(config('suitos') as $suito_id => $name)
+                                    <option value="{{ $suito_id }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- 金額入力 -->
+                        <div class="money">
+                            <label for="money-id">{{ __('金額') }}</label>
+                            <input type="tel" id='income'>
+                            <p>円</p>
+                        </div>
+                        <!-- 自分のIDなら編集削除ボタンを表示 -->
+                            <div class="links">
+                                <button type="text" class="link_edit">編集する</button>
+                                <button type="text" class="link_delete">削除する</button>
+                            </div>
+                        <!-- ここまで -->
+                    </div>
+                </form>
             </div>
         </div>
         <div class="button">
@@ -411,6 +452,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/suito.js') }}"></script>
 </body>
 </html>
