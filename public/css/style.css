@@ -87,6 +87,7 @@ header .container {
     line-height: 60px;
     text-align: center;
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .nav .group {
@@ -96,6 +97,7 @@ header .container {
 
 .nav a {
     color: white;
+    display: block;
 }
 
 .nav .mf {
@@ -104,6 +106,12 @@ header .container {
 
 .nav .logout {
     background: royalblue;
+}
+
+.logout button {
+    background: royalblue;
+    border: none;
+    color: white;
 }
 
 .nav li:hover {

@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
 
 // ホーム画面（スケジュール）
-Route::get('/', function () {
-    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
-});
+//Route::get('/', function () {
+//    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
+//});
 Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')->name('calendar');
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
@@ -49,9 +49,21 @@ Route::get('/', function () {
 Route::get('/suito/{year}/{month}','App\Http\Controllers\SuitoController@showSuito')->name('suito');
 
 // MF登録画面
+
 Route::post('/suito_store/{year}/{month}','App\Http\Controllers\SuitoController@suitoStore')->name('suito_store');
 Route::post('/suito_edit/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitoedit')->name('suito_edit'); 
 Route::post('/suito_delete/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitodestroy')->name('suito_delete');
 
 // MF登録合計表示
 Route::get('/suitos/{year}/{month}','App\Http\Controllers\SuitoController@suitoIncome');
+
+Route::get('/money','App\Http\Controllers\MoneyController@money')->name('money');
+
+//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//    return view('dashboard');
+//})->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
+})->name('dashboard');
+

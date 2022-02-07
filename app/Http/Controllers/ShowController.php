@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon; //日付のライブラリ
 use Yasumi\Yasumi; //祝日取得のライブラリ
 
@@ -57,6 +59,7 @@ class ShowController extends Controller
             $dates[] = $date->copy(); 
         }
 
+        $user = Auth::user();
         //$contents = Schedule::where('schedule_date', 'like', );
 
         $month_en = [ //英語表記の為の配列
@@ -75,7 +78,7 @@ class ShowController extends Controller
             'December'
         ];
 
-        return view('index', ['dates' => $dates, 'year' => $year, 'month' => $month, 'month_en' => $month_en, 'holidays' => $holidays, 'google_holidays' => $google_holidays]);
+        return view('index', ['dates' => $dates, 'year' => $year, 'month' => $month, 'month_en' => $month_en, 'holidays' => $holidays, 'google_holidays' => $google_holidays, 'user' => $user]);
     }
 
     public function requestCalendar(Request $request)
