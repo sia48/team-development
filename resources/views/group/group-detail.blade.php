@@ -6,63 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/group.css') }}">
     <link rel="stylesheet" href="{{ asset('css/group-responsive.css') }}">
-    <!-- <link rel="icon" href=""> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>グループ詳細</title>
 </head>
 <body>
-    <div class="modal" id="detail">
+    <div id="detail">
         <div class="title">
             <h2>{{ $group->group_name }}</h2>
-            <span style="display:none" data-group-id="{{ $group->id }}">{{ $group->id }}</span>
+            <span style="display:none" data-group-id="{{ $group->id }}" class="group_id">{{ $group->id }}</span>
+            <a href="/"><span class="close">x</span></a>
         </div>
         <div class="detail">
             <div class="members">
-                <h2>メンバー（5）</h2>
-                <div class="member">
-                    <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                        <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a><!-- プロフィールに飛べるようにする -->
+                <h2>メンバー（{{ count($belongsTo_users) }}）</h2>
+                @foreach($belongsTo_users as $belongsTo_user)
+                    <div class="member">
+                        <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
+                            <img src="{{ asset('storage/user-image/'.$belongsTo_user->profile_photo_path) }}" alt="自分のアイコン">
+                        </div>
+                        <h3>{{ $belongsTo_user->name }}</h3>
+                        @if($group->created_user_id === $user->id && $belongsTo_user->id !== $user->id) 
+                            <form action="{{ route('member_delete', ['id' => $group->id, 'user_id' => $belongsTo_user->id]) }}" method="post" id="delete{{ $belongsTo_user->id }}">
+                                @csrf
+                                <button type="submit" form="delete{{ $belongsTo_user->id }}">除名する</button>
+                            </form>
+                        @endif
                     </div>
-                    <h3>ユーザー名</h3>
-                </div>
-                <div class="member">
-                    <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                        <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a><!-- プロフィールに飛べるようにする -->
-                    </div>
-                    <h3>ユーザー名</h3>
-                </div>
+                @endforeach
             </div>
             <div class="operations">
                 <form action="{{ route('group_update', ['id' => $group->id]) }}" method="post" enctype="multipart/form-data" id="update">
                 @csrf
                     <div class="operation">
                         <div class="group_icon">
-                            <img src="{{ asset('storage/group-image/'.$group->group_image) }}" alt="グループのアイコン">
+                            <img src="{{ asset('storage/group-image/'.$group->group_image) }}" alt="グループのアイコン" id="group_image">
+                            <div class="button">
+                                @if($group->created_user_id === $user->id)
+                                    <button type="button" id="delete">グループを削除する</button>
+                                @endif
+                                <button type="button" class="exit">グループを抜ける</button><!-- submitにする -->
+                            </div>
                         </div>
-                        <button type="button" id="delete">グループを削除する</button>
-                        <button type="button">グループを抜ける</button><!-- submitにする -->
-                        <h4>グループ写真</h4>
-                        <input type="file" name="group_image" value="{{ $group->group_image }}">
-                        <input type="text" name="group_name" value="{{ $group->group_name }}">
+                        <div class="group_detail">
+                            <h4 class="file">グループ写真</h4>
+                            <label>
+                                <input type="file" name="group_image" value="{{ $group->group_image }}" id="image">変更する際は選択して下さい
+                            </label>
+                            <h4>グループ名</h4>
+                            <input type="text" name="group_name" value="{{ $group->group_name }}">
+                        </div>
                     </div>
                 </form>
-                <div class="ope_inv">
-                    <h3>招待するメンバーを選択</h3>
-                    <input type="text" name="user" class="user" placeholder="ユーザー名">
-                    <button type="button" class="search">検索</button>
-                    <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                        <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a><!-- プロフィールに飛べるようにする -->
+                <div class="invitation">
+                    <div class="search_area">
+                        <h3>招待するメンバーを選択</h3>
+                        <input type="text" name="user" class="user" placeholder="ユーザー名">
+                        <button type="button" class="search">検索</button>
                     </div>
-                    <h3 class="user_name">ユーザー名</h3>
-                    <button type="button" class="invitation">招待する</button>
+                    <div class="searched">
+                        <img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン" class="search_user_icon">
+                        <h3 class="search_user_name">ユーザー名</h3>
+                    </div>
+                    <strong class="invd" style="display:none"></strong>
+                    <button type="button" class="inv_btn btn">招待する</button>
                 </div>
                 <div class="button_area">
-                    <button type="button" class="close">キャンセル</button>
+                    <a href="{{ route('group_show') }}" class="close">キャンセル</a>    
                     <button type="submit" class="update" form="update">保存する</button>
                 </div>
-            </div>
-        </div>     
+            </div> 
+        </div>  
     </div>
     <script src="{{ asset('js/group.js') }}"></script>
 </body>

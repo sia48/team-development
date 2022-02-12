@@ -7,6 +7,8 @@ use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon; //日付のライブラリ
 use Yasumi\Yasumi; //祝日取得のライブラリ
 
@@ -60,7 +62,27 @@ class ShowController extends Controller
         }
 
         $user = Auth::user();
-        //$contents = Schedule::where('schedule_date', 'like', );
+        $date_key = $year . '年' . $month . '月';
+
+        $schedules = Schedule::select('users.id', 'users.group_id', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
+                ->join('users', 'users.id', '=', 'schedules.user_id')
+                ->where('users.group_id', '=', $user->group_id)
+                ->where('schedules.schedule_date', 'like', "%$date_key%")
+                ->get();
+
+        $my_schedules = Schedule::select('id', 'user_id', 'schedule', 'schedule_date')
+                    ->where('user_id', '=', $user->id)
+                    ->where('schedule_date', 'like', "%$date_key%")
+                    ->get();
+
+        if($user->invitation > 0) {
+            $groups = Group::find($user->invitation);
+            $author_id = $groups->created_user_id;
+            $author = User::find($author_id);
+        } else {
+            $groups = null;
+            $author = null;
+        }
 
         $month_en = [ //英語表記の為の配列
             0,
@@ -78,7 +100,21 @@ class ShowController extends Controller
             'December'
         ];
 
-        return view('index', ['dates' => $dates, 'year' => $year, 'month' => $month, 'month_en' => $month_en, 'holidays' => $holidays, 'google_holidays' => $google_holidays, 'user' => $user]);
+        return view('index', 
+            [
+                'dates' => $dates, 
+                'year' => $year, 
+                'month' => $month, 
+                'month_en' => $month_en, 
+                'holidays' => $holidays, 
+                'google_holidays' => $google_holidays, 
+                'user' => $user, 
+                'schedules' => $schedules, 
+                'groups' => $groups, 
+                'author' => $author, 
+                'my_schedules' => $my_schedules
+            ]
+        );
     }
 
     public function requestCalendar(Request $request)
@@ -92,7 +128,7 @@ class ShowController extends Controller
     public function store(Request $request, $year, $month)
     {
         $content = new Schedule();
-        $content->user_id = 1;
+        $content->user_id = Auth::user()->id;
         $content->schedule = $request->schedule;
         $content->schedule_date = $request->schedule_date;
         $content->save();
@@ -103,7 +139,7 @@ class ShowController extends Controller
     public function edit($year, $month, $id, Request $request)
     {   
         $content = Schedule::find($id);
-        $content->schedule = $request->schedule;
+        $content->schedule = $request->schedule_edit;
         $content->save();
         return redirect()->route('calendar', ['year' => $year, 'month' => $month]);
     }
@@ -115,10 +151,30 @@ class ShowController extends Controller
         return redirect()->route('calendar', ['year' => $year, 'month' => $month]);
     }
 
-    public function test($day)
+    public function profile(Request $request, $id) 
+    {
+        $user = User::find($id);
+        $user->name = $request->name;
+        if(isset($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
+        if(isset($request->user_image)) {
+            $user->profile_photo_path = $request->user_image->store('public/user-image');
+            $user->profile_photo_path = str_replace('public/user-image', '', $user->profile_photo_path);
+        }
+        $user->save();
+
+        return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
+    }
+
+    public function test($day, $group_id, $user_id)
     {   
-        $contents = Schedule::where('schedule_date', '=', $day )->get();
+        $contents = Schedule::select('users.id', 'users.group_id', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
+        ->join('users', 'users.id', '=', 'schedules.user_id')
+        ->where('users.group_id', '=', $group_id)
+        ->where('schedules.schedule_date', '=', $day)
+        ->get();
+
         return $contents;
     }
 }
-
