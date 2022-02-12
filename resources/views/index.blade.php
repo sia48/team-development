@@ -6,26 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-    <!-- <link rel="icon" href=""> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>ホ-ム</title>
 </head>
 <body>
+    <div class="overlay"></div>
     <header class="header">
         <div class="container">
             <div class="me">
                 <div class="my-icon">
-                    <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
+                    <a class="profile_edit"><img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン"></a>
                 </div>
                 <div class="my-user">
                     <div class="my-name">
-                        <a href="">{{ $user->name }}</a>
+                        <a class="profile_edit">{{ $user->name }}</a>
                     </div>
                     <div class="my-group">
-                        <a href="">{{ $user->group_id }}</a>
+                        @if($user->group_id !== 0)
+                            <a href="{{ route('group_detail', ['id' => $user->group_id]) }}">{{ $user->group->group_name }}</a>
+                        @endif
                     </div>
                 </div>
+                @if($user->invitation > 0)
+                    <div class="group_invitation">
+                        <a class="inv_modal">グループに招待されています</a>
+                    </div>
+                @endif
             </div>  
             <nav class="nav pc">
                 <ul>
@@ -294,7 +301,7 @@
                                 <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
                                 <?php $js_year = $date->year;?>
                                 <?php $js_month = $date->month;?>
-                                <a class="cell_link {{ $js_year }} {{ $js_month }}" 
+                                <a data-group-id="{{ $user->group_id }}" class="cell_link {{ $js_year }} {{ $js_month }}" 
                                     @if($holidays->isHoliday($date))
                                         id="holiday"
                                     @endif
@@ -325,92 +332,160 @@
     <div class="modal" id="create"> <!-- 新規登録のモーダル -->
         <form action="{{ route('store', ['year' => $year, 'month' => $month]) }}" method="post">
             @csrf
-            <input type="text" name="schedule_date" value="" class="day">
-            <span class="close">x</span>
+            <div class="top">
+                <input type="text" name="schedule_date" value="" class="day">
+                <span class="close">x</span>
+            </div>
             <div class="contents">
                 <div class="user_icon">
-                    <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
+                    <img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" class="my_schedule">
+                    <p>{{ $user->name }}</p>
                 </div>
                 <div class="details">
                     <div class="detail">
-                        <textarea name="schedule"></textarea>
+                        <textarea name="schedule" required></textarea>
                     </div>
                 </div>
             </div>
             <div class="button">
-                <button type="button" class="close">一覧に戻る</button>
-                <button type="submit" class="submit">登録する</button>
+                <button type="button" class="btn close">一覧に戻る</button>
+                <button type="submit" class="btn submit">登録する</button>
             </div>
         </form>
     </div>
 
-    <div class="modal" id="edit"> <!-- 編集用モーダル -->
-        <input type="text" name="schedule_date" value="" class="day">
-        <span class="close">x</span>
-        <div class="contents">
-            <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
+    <div class="modal" id="edit" data-user-id="{{ $user->id }}"> <!-- 編集用モーダル -->
+        <form action="{{ route('store', ['year' => $year, 'month' => $month]) }}" method="post" id="edit_form">
+            @csrf
+            <div class="top">
+                <input type="text" name="schedule_date" value="" class="day">
+                <span class="close">x</span>
             </div>
-            <div class="details">
-                <div class="detail">
-                    <textarea class="textarea_edit" id="textarea_edit" name="schedule" placeholder="" disabled></textarea>
-                    <!-- 自分のIDなら編集削除ボタンを表示 -->
-                        <div class="links">
-                            <button type="text" class="link_edit">編集する</button>
-                            <button type="text" class="link_delete">削除する</button>
+            <div class="contents">
+                <div class="details">
+                    @foreach($my_schedules as $my_schedule)
+                        <div class="detail detail{{ $my_schedule->id }}" style="display:none"> 
+                            <div class="user_icon">
+                                <img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" class="my_schedule">
+                                <p class="my_name">{{ $user->name }}</p>
+                            </div>
+                            <textarea class="textarea_edit textarea_edit{{ $my_schedule->id }}" name="schedule_edit" placeholder="" disabled >{{ $my_schedule->schedule }}</textarea>
+                            <div class="links">
+                                <button type="button" class="link_btn link_edit link_edit{{ $my_schedule->id }}">編集する</button>
+                                <button type="button" class="link_btn link_update link_update{{ $my_schedule->id }}" style="display:none">更新する</button>
+                                <button type="button" class="link_btn link_delete link_delete{{ $my_schedule->id }}">削除する</button>
+                            </div>
                         </div>
-                    <!-- ここまで -->
+                    @endforeach
+                    @foreach($schedules as $schedule)
+                        @if($schedule->user_id !== $user->id)
+                            <div class="other detail detail{{ $schedule->schedule_id }}" style="display:none"> 
+                                <div class="user_icon"> {{--TODO : ここでユーザーの画像を取ってくる--}}
+                                    <img src="{{ asset('storage/user-image/'.$schedule->user->profile_photo_path) }}" alt="ユーザーのアイコン">
+                                    <p class="schedule_user_name">{{ $schedule->user->name }}</p>
+                                </div>
+                                <p class="same_group_users_schedule">{{ $schedule->schedule }}</p>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
-        </div>
-        <div class="button">
-            <button type="button" class="close">一覧に戻る</button>
-        </div>
-    </div>
-
-    <div class="modal" id="update_delete"> <!-- 更新用モーダル -->
-        <input type="text" name="schedule_date" value="" class="day">
-        <span class="close">x</span>
-        <div class="contents">
-            <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
-            </div>
-            <div class="details">
-                <div class="detail">
-                    <form action="#" method="post" id="update_form">
-                        @csrf
-                        <textarea class="textarea_update" id="textarea_update" name="schedule" placeholder=""></textarea>
-                        <div class="links">
-                            <button type="submit" class="link_update">更新する</button>
-                            <button type="button" class="close">一覧に戻る</button>
-                        </div>
-                    </form>
+            <div class="store_area">
+                <div class="store">
+                    <textarea name="schedule" class="textarea_store" placeholder="新しい予定を登録する場合はこちら" required></textarea>
+                </div>
+                <div class="button">
+                    <button type="button" class="btn close">一覧に戻る</button>
+                    <button type="button" class="btn submit">登録する</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="modal" id="delete"> <!-- 削除用モーダル -->
-        <input type="text" name="schedule_date" value="" class="day">
-        <span class="close">x</span>
+        <div class="top">
+            <input type="text" name="schedule_date" value="" class="day">
+            <span class="close">x</span>
+        </div>
         <div class="contents">
-            <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
-                <a href=""><img src="{{ asset('img/icon-default-user.svg') }}" alt="自分のアイコン"></a>
+            <div class="user_icon">
+                <img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" class="my_schedule">
+                <p class="schedule_user_name">{{ $user->name }}</p>
             </div>
             <div class="details">
                 <div class="detail">
-                    <form action="#" method="post" id="delete_form"><!-- 削除用ルート -->
+                    <form action="#" method="post" id="delete_form">
                         @csrf
                         <textarea class="textarea_delete" id="textarea_delete" name="schedule" placeholder="" disabled></textarea>
                         <h2>上記の予定を削除してよろしいですか？</h2>
-                        <button type="submit" class="delete">はい</button>
-                        <button type="button" class="close">いいえ</button>
+                        <div class="button">
+                            <button type="submit" class="btn delete">はい</button>
+                            <button type="button" class="btn close">いいえ</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
+    @if($groups !== null)
+        <?php 
+            $array = explode(' ', $user->belongs_group);
+            $count = count($array);
+         ?>
+        <div class="modal" id="invitation"> <!-- グループ招待用モーダル -->
+        <span class="inv_modal_close">x</span>
+            <div class="group">
+                <div class="group_detail">
+                    <div class="group_image">
+                        <!-- <img src="{{--$groups->image--}}" alt="グループのアイコン"> -->
+                        <img src="{{ asset('img/icon-default-user.svg') }}" alt="グループのアイコン">
+                        <h2 data-group-num-id="{{ $groups->id }}" class="group_name">{{ $groups->group_name }}</h2>
+                    </div>
+                    <p>作成者: <a href="">{{ $author->name }}</a></p>
+                </div>
+                <h3>上記グループに招待されています。</h3>
+                <strong class="alert" style="display:none" data-count-id="{{ $count }}">
+                    所属できるグループは3つまでです。<br>
+                    拒否ボタンを押下して招待をお断りするか、他のグループから脱退して下さい。
+                </strong>
+                <form action="#" method="post" id="form_invitation">
+                    @csrf
+                    <button type="button" class="add">参加する</button>
+                    <button type="button" class="rejection">拒否する</button>
+                </form>
+            </div>
+        </div>
+    @endif
+
+    <div class="modal" id="profile"> <!-- プロフィール用モーダル -->
+        <div class="top">
+            <h2>プロフィール編集</h2>
+            <span class="close">x</span>
+        </div>
+        <div class="contents">
+            <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
+                <a href=""><img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" id="user_image"></a>
+            </div>
+            <div class="profile">
+                <form action="{{ route('profile', ['id' => $user->id]) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <p>プロフィール写真</p>
+                    <label>
+                        <input type="file" name="user_image" value="{{ $user->profile_photo_path }}" id="image">変更する際は選択して下さい
+                    </label>
+                    <p>ニックネーム</p>
+                    <input type="text" name="name" value="{{ $user->name }}">
+                    <p>パスワード</p>
+                    <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい">
+                    <div class="button">
+                        <button type="button" class="btn close">キャンセル</button>
+                        <button type="submit" class="btn edit">保存する</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

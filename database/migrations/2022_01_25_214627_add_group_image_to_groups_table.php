@@ -14,7 +14,7 @@ class AddGroupImageToGroupsTable extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->string('group_image')->default('/storage/icon-default-user.svg');
+            $table->string('group_image')->default("storage/icon-default-user.svg");
         });
     }
 

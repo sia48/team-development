@@ -16,8 +16,8 @@ class SchedulesTableSeeder extends Seeder
      */
     public function run()
     {
-       $start = Carbon::create("2018", "1", "1");
-       $end = Carbon::create("2023", "12", "31");
+       $start = Carbon::create("2022", "1", "1");
+       $end = Carbon::create("2022", "1", "31");
 
        $min = strtotime($start);
        $max = strtotime($end);
@@ -27,7 +27,7 @@ class SchedulesTableSeeder extends Seeder
             $timestamp = date('Y-m-d', $date);
             $date = date('Y年n月j日', $date);            
             DB::table('schedules')->insert([
-                'user_id' => rand(1, 3),
+                'user_id' => rand(1, 6),
                 'schedule' => Str::random(15),
                 'schedule_date' => $date,
                 'created_at' => $timestamp,

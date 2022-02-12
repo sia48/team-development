@@ -27,7 +27,7 @@ Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
 // プロフィール画面
-Route::get('/profile','App\Http\Controllers\UserController@profile')->name('profile');
+Route::post('/profile/{id}','App\Http\Controllers\ShowController@profile')->name('profile');
 
 // スケジュール画面
 Route::post('/store/{year}/{month}','App\Http\Controllers\ShowController@store')->name('store');
@@ -36,11 +36,15 @@ Route::post('/delete/{year}/{month}/{id}', 'App\Http\Controllers\ShowController@
 
 // グループ画面に遷移する
 Route::get('/group','App\Http\Controllers\GroupController@group')->name('group');
-Route::post('/group_store','App\Http\Controllers\GroupController@store')->name('group_store');
+Route::post('/group_store/{num}','App\Http\Controllers\GroupController@store')->name('group_store');
 Route::get('/group_show','App\Http\Controllers\GroupController@show')->name('group_show');
 Route::get('/group/detail/{id}','App\Http\Controllers\GroupController@detail')->name('group_detail');
 Route::post('/group/update/{id}','App\Http\Controllers\GroupController@update')->name('group_update');
 Route::post('/group/delete/{id}','App\Http\Controllers\GroupController@destroy')->name('group_delete');
+Route::post('/group/exit/{id}','App\Http\Controllers\GroupController@exit');
+Route::post('/group/delete_member/{user_id}/{id}','App\Http\Controllers\GroupController@destroyMember')->name('member_delete');
+Route::post('/group_invitation/{num}','App\Http\Controllers\GroupController@invitation');
+Route::post('/group_select/{id}','App\Http\Controllers\GroupController@select');
 
 // ホーム画面（家計簿）
 Route::get('/home','App\Http\Controllers\MoneyController@home')->name('home');
