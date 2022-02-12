@@ -28,6 +28,7 @@ $(function() {
         var group_id = $(this).data('group-id');
         var user_id = $('#edit').data('user-id');
         $('.day').attr("value", day);
+        console.log(day);
         var classVal = $(this).attr('class'); 
         var classVals = classVal.split(' ');  
         var year = classVals[1];

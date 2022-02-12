@@ -429,6 +429,7 @@ th {
     z-index: 11;
     overflow-y: auto;
     /* overflow-y: scroll; */
+ 　 display: none;
 }
 
 .modal .day {
