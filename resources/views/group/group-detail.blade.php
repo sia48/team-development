@@ -53,7 +53,7 @@
                             <label>
                                 <input type="file" name="group_image" value="{{ $group->group_image }}" id="image">変更する際は選択して下さい
                             </label>
-                            <h4>グループ名</h4>
+                            <h4 class="group_name">グループ名</h4>
                             <input type="text" name="group_name" value="{{ $group->group_name }}">
                         </div>
                     </div>

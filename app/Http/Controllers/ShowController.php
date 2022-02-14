@@ -156,8 +156,13 @@ class ShowController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         if(isset($request->password)) {
+            $rules = [
+                'password' => ['confirmed']
+            ];
+            $this->validate($request, $rules);
             $user->password = Hash::make($request->password);
         }
+
         if(isset($request->user_image)) {
             $user->profile_photo_path = $request->user_image->store('public/user-image');
             $user->profile_photo_path = str_replace('public/user-image', '', $user->profile_photo_path);

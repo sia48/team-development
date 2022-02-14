@@ -22,7 +22,6 @@ $(function() {
     });
 
     //modal
-    $('.modal').hide();
     $('.cell_link').click(function() {
         var day = $(this).data('id');
         var group_id = $(this).data('group-id');
@@ -62,6 +61,7 @@ $(function() {
                         $(`.link_edit${date_schedule[i].schedule_id}`).click(function(){
                             $('.textarea_edit').each(function() {
                                 $('.textarea_edit').prop('disabled', true);
+                                $('#edit .btn.submit').css('background', 'limegreen');
                             });
                             $('.link_update').each(function() {
                                 $('.link_update').css('display', 'none');
@@ -70,10 +70,10 @@ $(function() {
                                 $('.link_edit').css('display', 'block');
                             });
                             $('.textarea_store').val('');
-                            $('#edit .btn.submit').html('予定を入力する');
+                            $('#edit .btn.submit').html('入力する');
                             $(this).css('display', 'none');
                             $(this).next('.link_update').css('display', 'block');
-                            $(`.textarea_edit${date_schedule[i].schedule_id}`).prop('disabled', false);
+                            $(`.textarea_edit${date_schedule[i].schedule_id}`).prop('disabled', false).focus();
                             $('.textarea_store').prop('disabled', true);
                             $('#edit_form').attr('action', ` ${url}/edit/${year}/${month}/${date_schedule[i].schedule_id}`);
                             $(`.link_update${date_schedule[i].schedule_id}`).click(function(){
@@ -81,7 +81,7 @@ $(function() {
                             });
                         });
                         $('#edit .btn.submit').click(function() {
-                            $('.textarea_store').prop('disabled', false);
+                            $('.textarea_store').prop('disabled', false).focus();
                             $('#edit_form').attr('action', ` ${url}/store/${year}/${month}`);
                             $('.textarea_edit').each(function() {
                                 $('.textarea_edit').prop('disabled', true);
@@ -92,7 +92,7 @@ $(function() {
                             $('.link_edit').each(function() {
                                 $('.link_edit').css('display', 'block');
                             });
-                            $(this).attr('type', 'submit').html('登録する');
+                            $(this).attr('type', 'submit').html('登録する').css('background', 'orange');
                             if($('.textarea_store').val() == '') {
                                 return false;
                             } 
@@ -177,5 +177,15 @@ $(function() {
             })(file);
           reader.readAsDataURL(file);
         });
+    });
+
+    $('.password, .password2').on('input', function() {
+        if($('.password').val() != $('.password2').val()) {
+            $('.password_error').css('display', 'block');
+            $('.btn.edit').attr('type', 'button');
+        } else {
+            $('.password_error').css('display', 'none'); 
+            $('.btn.edit').attr('type', 'submit');
+        }
     });
 });

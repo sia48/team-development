@@ -26,7 +26,7 @@
                 <div class="group_store">
                     <div class="group_icon">
                         <label>
-                            <input type="file" name="group_image" id="image">イメージ画像を選択して下さい。（省略可）
+                            <input type="file" name="group_image" id="image">イメージ画像（省略可）
                         </label>
                     </div>
                     <div class="group_name">
