@@ -1,0 +1,332 @@
+@media (max-width: 1200px) {
+    .store {
+        width: 50%;
+    }
+
+    .title h2 {
+        font-size: 26px;
+    }
+
+    .store .group_image img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .store .group_image p {
+        font-size: 14px;
+    }
+
+    .store .group_store input {
+        width: 80%;
+        height: 30px;
+        font-size: 18px;
+    }
+
+    .store .group_store label {
+        width: 80%;
+        height: 30px;
+        padding: 4px 0;
+    }
+
+    .store .group_store input:focus {
+        border: 3px solid rgba(50, 120, 250, 0.5);
+        border-radius: 10px;
+    }
+
+    .store .member_list h2 {
+        font-size: 18px;
+    }
+
+    .store .invitation h2 {
+        font-size: 18px;
+    }
+
+    .store .searched {
+        margin-top: 20px;
+    }
+
+    .store .searched img.search_user_icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .store .searched .search_user_name {
+        font-size: 18px;
+    }
+
+    .show .group_icon {
+        width: 20%;
+    }
+
+    .show .group_icon img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .show .belong_group a {
+        color: black;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    .store {
+        width: 60%;
+    }
+
+    #detail {
+        width: 90%;
+    }
+}
+
+@media (max-width: 767px) {
+    .store {
+        width: 60%;
+        padding: 10px 0;
+    }
+
+    .title {
+        padding: 0 10px 10px;
+    }
+
+    .title h2 {
+        font-size: 22px;
+    }
+
+    .store .group_image img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .store .group_image p {
+        font-size: 12px;
+    }
+
+    .store .group_store input {
+        width: 90%;
+        height: 20px;
+        font-size: 14px;
+        padding: 0 1px;
+    }
+
+    .store .group_store input:focus {
+        border: 2px solid rgba(50, 120, 250, 0.5);
+    }
+
+    .store .group_store label {
+        width: 90%;
+        height: 20px;
+        padding: 0;
+        font-size: 14px;
+    }
+
+    .store .member_list h2 {
+        font-size: 14px;
+    }
+
+    .store .user_icon h3 {
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    .store .user_icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .store .invitation h2 {
+        font-size: 14px;
+    }
+
+    .store .invitation input {
+        margin-top: 10px;
+        line-height: 2;
+        font-size: 14px;
+    }
+
+    .store .invitation input:focus {
+        border: 2px solid rgba(50, 120, 250, 0.5);
+    }
+
+    .store .invitation button {
+        font-size: 14px;
+        line-height: 2;
+    }
+
+    .store .button_area a {
+        font-size: 14px;
+    }
+
+    .store .button_area button {
+        font-size: 14px;
+    }
+
+    .store .button_area .alert {
+        font-size: 14px;
+    }
+
+    #detail .search_area input {
+        width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .store {
+        width: 90%;
+    }
+
+    .show {
+        width: 90%;
+    }
+
+    .show .title h2 {
+        font-size: 16px;
+    }
+
+    .show .group_icon img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .show .belong_group a {
+        font-size: 16px;
+    }
+
+    .show .button_choice button {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .show .button_area a {
+        padding: 5px;
+        font-size: 14px;
+        width: 40%;
+    }
+
+    #detail {
+        padding-top: 10px;
+    }
+
+    #detail .members h2 {
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    #detail .user_icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+    #detail .member h3 {
+        font-size: 10px;
+    }
+
+    #detail .member button {
+        padding: 0 5px;
+        font-size: 10px;
+        bottom: -10%;
+    }
+
+    #detail .group_icon {
+        padding: 5px;
+    }
+
+    #detail .group_icon img {
+        width: 50px;
+        height: 50px;
+    }
+
+    #detail .group_icon button {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    #detail .group_detail {
+        padding: 10px;
+    }
+
+    #detail .group_detail input[type='text'] {
+        height: 25px;
+        font-size: 12px;
+    }
+
+    #detail .group_detail input[type='text']:focus {
+        border: 2px solid rgba(50, 120, 250, 0.5);
+    }
+
+    #detail .group_detail label {
+        padding: 2px;
+        font-size: 12px;
+    }
+
+    #detail .group_detail h4 {
+        font-size: 12px;
+    }
+
+    #detail .group_detail h4.file {
+        margin-bottom: 5px;
+    }
+
+    #detail .group_detail h4.group_name {
+        margin-top: 10px;
+    }
+
+    #detail .invitation {
+        padding: 10px;
+    }
+
+    #detail .search_area h3 {
+        font-size: 14px;
+    }
+
+    #detail .search_area input {
+        line-height: 1.5;
+        font-size: 14px;
+        width: 60%;
+    }
+
+    #detail .search_area input:focus {
+        border: 2px solid rgba(50, 120, 250, 0.5);
+    }
+
+    #detail .search_area button {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    #detail .searched {
+        margin-top: 10px;
+    }
+
+    #detail .searched img {
+        width: 40px;
+        height: 40px;
+    }
+
+    #detail .searched h3 {
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+    #detail .invitation .inv_btn {
+        font-size: 10px;
+    }
+
+    #detail .button_area {
+        margin-top: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    #detail .button_area a {
+        font-size: 12px;
+    }
+
+    #detail .button_area button {
+        font-size: 12px;
+    }
+}

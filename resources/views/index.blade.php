@@ -30,8 +30,13 @@
                 </div>
                 @if($user->invitation > 0)
                     <div class="group_invitation">
-                        <a class="inv_modal">グループに招待されています</a>
+                        <li class="inv_modal"><a>グループに<br>招待されています</a></li>
                     </div>
+                @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <li style="color:red" class="error">{{ $error }}</li>
+                    @endforeach
                 @endif
             </div>  
             <nav class="nav pc">
@@ -286,6 +291,10 @@
                         <th>土</th>
                     </tr> 
                     @foreach($dates as $date)
+                    <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
+                    <?php $js_year = $date->year;?>
+                    <?php $js_month = $date->month;?>
+
                         @if($date->dayOfWeek == 0)
                             <tr>
                         @endif                        
@@ -298,9 +307,6 @@
                                     class="today"
                                 @endif
                             >
-                                <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
-                                <?php $js_year = $date->year;?>
-                                <?php $js_month = $date->month;?>
                                 <a data-group-id="{{ $user->group_id }}" class="cell_link {{ $js_year }} {{ $js_month }}" 
                                     @if($holidays->isHoliday($date))
                                         id="holiday"
@@ -318,6 +324,13 @@
                                         @endif
                                     @endif
                                 </a>
+
+                                @foreach($schedules as $schedule)
+                                    @if($schedule->schedule_date == $date_modal)
+                                        <p class="has_schedule">●</p>
+                                        @break
+                                    @endif
+                                @endforeach
                             </td>
                             
                         @if($date->dayOfWeek == 6)
@@ -380,7 +393,7 @@
                     @foreach($schedules as $schedule)
                         @if($schedule->user_id !== $user->id)
                             <div class="other detail detail{{ $schedule->schedule_id }}" style="display:none"> 
-                                <div class="user_icon"> {{--TODO : ここでユーザーの画像を取ってくる--}}
+                                <div class="user_icon">
                                     <img src="{{ asset('storage/user-image/'.$schedule->user->profile_photo_path) }}" alt="ユーザーのアイコン">
                                     <p class="schedule_user_name">{{ $schedule->user->name }}</p>
                                 </div>
@@ -477,7 +490,10 @@
                     <p>ニックネーム</p>
                     <input type="text" name="name" value="{{ $user->name }}">
                     <p>パスワード</p>
-                    <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい">
+                    <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい" minlength="8" class="password">
+                    <p>パスワード確認</p>
+                    <input type="password" name="password_confirmation" placeholder="もう一度ご入力下さい" minlength="8" class="password2">
+                    <li style="display:none; color:red" class="password_error">パスワードとパスワード確認が一致していません</li>
                     <div class="button">
                         <button type="button" class="btn close">キャンセル</button>
                         <button type="submit" class="btn edit">保存する</button>

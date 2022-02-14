@@ -13,7 +13,6 @@ html {
 
 /*//////////////////////////////////////////////////////////*/
 /*store*/
-
 .store {
     padding: 20px 0;
     text-align: center;
@@ -80,6 +79,8 @@ html {
     padding: 10px 0;
     border: 1px solid gray;
     cursor: pointer;
+    display: block;
+    width: 70%;
 }
 
 .store .group_store label:hover {
@@ -134,7 +135,7 @@ html {
 
 .store .user_icon h3 {
     font-size: 18px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .store .user_image {
@@ -152,11 +153,14 @@ html {
     width: 60%;
     padding: 10px;
     position: relative;
+    text-align: left;
 }
 
 .store .invitation h2 {
     margin-top: 10px;
+    text-align: center;
 }
+
 .store .invitation h3 {
     font-size: 22px;
     margin-left: 15px;
@@ -167,6 +171,7 @@ html {
     line-height: 2;
     font-size: 20px;
     outline: none;
+    width: 70%;
 }
 
 .store .invitation input:focus {
@@ -236,7 +241,7 @@ html {
     text-decoration: none;
     padding: 5px;
     border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .store .button_area a:hover {
@@ -251,7 +256,7 @@ html {
     font-size: 20px;
     padding: 5px 10px;
     border-radius: 10px;
-    margin-left: 10px;
+    margin-left: 20px;
     cursor: pointer;
 }
 
@@ -261,11 +266,10 @@ html {
 }
 
 /*show*/
-
 .show {
     padding: 20px 0;
     text-align: center;
-    width: 40%;
+    width: 600px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -378,11 +382,10 @@ html {
 }
 
 /*detail*/
-
 #detail {
     padding-top: 20px;
     text-align: center;
-    width: 60%;
+    width: 800px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -408,6 +411,7 @@ html {
     background: ghostwhite;
     top: 10px;
     margin-bottom: 40px;
+    font-size: 22px;
 }
 
 #detail .user_icon img {
@@ -451,19 +455,19 @@ html {
 }
 
 #detail .operation {
-     border-bottom: 1px solid gray;
+    border-bottom: 1px solid gray;
 }
 
 #detail .group_icon {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
 }
 
 #detail .group_icon img {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -471,7 +475,8 @@ html {
 #detail .group_icon button {
     display: block;
     border: none;
-    padding: 10px;
+    font-size: 12px;
+    padding: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
     border-radius: 10px;
@@ -522,12 +527,15 @@ html {
 }
 
 #detail .group_detail h4 {
-    margin-top: 20px;
     font-size: 18px;
 }
 
 #detail .group_detail h4.file {
     margin-bottom: 10px;
+}
+
+#detail .group_detail h4.group_name {
+    margin-top: 15px;
 }
 
 #detail .invitation {
@@ -544,7 +552,8 @@ html {
 }
 
 #detail .search_area input {
-    line-height: 2;
+    line-height: 1.5;
+    padding-left: 5px;
     font-size: 20px;
     outline: none;
 }
@@ -558,7 +567,7 @@ html {
     display: inline-flex;
     align-items: center;
     font-size: 20px;
-    line-height: 2;
+    line-height: 1.5;
     background: limegreen;
     color: white;
     border: double;
@@ -573,15 +582,15 @@ html {
 }
 
 #detail .searched img {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
 
 #detail .searched h3 {
     margin-left: 20px;
-    font-size: 26px;
+    font-size: 18px;
 }
 
 #detail .invitation .inv_btn {
@@ -589,7 +598,7 @@ html {
     right: 10px;
     border: none;
     padding: 5px;
-    font-size: 20px;
+    font-size: 14px;
     border-radius: 10px;
     color: white;
     background: limegreen;
@@ -605,7 +614,7 @@ html {
     display: flex;
     justify-content: space-around;
     border-top: 1px solid gray;
-    margin-top: 50px;
+    margin-top: 30px;
     padding-bottom: 20px;
     padding-top: 20px;
 }
@@ -616,8 +625,8 @@ html {
     display: inline-flex;
     align-items: center;
     background: skyblue;
-    padding: 10px;
-    font-size: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
     border-radius: 10px;
 }
 
@@ -630,8 +639,8 @@ html {
     border: none;
     border-radius: 10px;
     color: white;
-    padding: 10px;
-    font-size: 20px;
+    padding: 5px 10px;
+    font-size: 16px;
     background: orange;
     cursor: pointer;
 }

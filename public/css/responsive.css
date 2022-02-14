@@ -1,8 +1,4 @@
 @media (max-width: 1200px) {
-    .my-icon {
-        width: 60px;
-    }
-
     .my-name a {
         font-size: 18px;
     }
@@ -208,11 +204,19 @@
         line-height: 2;
     }
 
+    .nav.sp li {
+        line-height: 0;
+    }
+
     .nav.sp li i {
         display: block;
         font-size: 60px;
         padding-top: 40px;
         line-height: 1.5;
+    }
+
+    .nav.sp li button {
+        font-size: 20px;
     }
 
     .aside {
@@ -231,10 +235,6 @@
 }
 
 @media (max-width: 767px) {
-    .my-icon {
-        width: 50px;
-    }
-
     .my-name a {
         font-size: 16px;
     }
@@ -289,8 +289,19 @@
         max-width: calc(100% - 40px);
     }
 
+    .header .inv_modal {
+        padding: 5px;
+        margin-left: 10px;
+        font-size: 5px;
+    }
+
     .my-icon {
-        width: 40px;
+        width: 50px;
+    }
+
+    .my-icon img {
+        width: 50px;
+        height: 50px;
     }
 
     .my-name a {
@@ -378,6 +389,10 @@
         font-size: 14px;
     }
 
+    .nav.sp li button {
+        font-size: 14px;
+    }
+
     .nav.sp li i {
         font-size: 30px;
         padding-top: 30px;
@@ -437,5 +452,247 @@
 
     .nav-calendar-right {
         top: 120%;
+    }
+
+    .modal {
+        width: 90%;
+        padding: 0 10px 0;
+    }
+
+    #profile.modal .contents {
+        padding: 10px;
+        margin-right: 0;
+    }
+
+    #profile.modal form {
+        display: block;
+    }
+
+    #profile.modal .user_icon img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+
+    #profile.modal .profile {
+        width: 100%;
+    }
+
+    #profile.modal .profile p {
+        font-size: 14px;
+    }
+
+    #profile.modal label {
+        height: 30px;
+        padding: 3px 5px;
+    }
+
+    #profile.modal input {
+        height: 30px;
+        font-size: 18px;
+    }
+
+    #profile.modal input:focus {
+        border: 2px solid rgba(50, 120, 250, 0.5);
+    }
+
+    #profile.modal .button button {
+        font-size: 12px;
+    }
+
+    #edit.modal .top input {
+        font-size: 22px;
+        width: 80%;
+    }
+
+    #edit.modal .top span.close {
+        font-size: 16px;
+    }
+
+    #edit.modal .contents {
+        margin-top: 10px;
+    }
+
+    #edit.modal .user_icon .my_schedule {
+        width: 50px;
+        height: 50px
+    }
+
+    #edit.modal .user_icon .my_name {
+        font-size: 10px;
+    }
+
+    #edit.modal .link_btn {
+        font-size: 10px;
+    }
+
+    #edit.modal .detail {
+        flex-wrap: wrap;
+    }
+
+    #edit.modal .textarea_edit {
+        width: 75%;
+        font-size: 14px;
+    }
+
+    #edit.modal .links {
+        display: flex;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #edit.modal .link_btn {
+        width: 90%;
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 5px;
+    }
+
+    #edit.modal .other.detail img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .same_group_users_schedule {
+        margin-left: 20px;
+        width: 100px;
+    }
+
+    #edit.modal .store_area {
+        flex-wrap: wrap;
+    }
+
+    #edit.modal .store_area .store {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    #edit.modal .store_area .textarea_store {
+        font-size: 16px;
+    }
+
+    #edit.modal .store_area .button {
+        width: 100%;
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    #edit.modal .store_area .button .btn {
+        width: 50%;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    #create.modal .top input {
+        font-size: 22px;
+        width: 80%;
+    }
+
+    #create.modal .top span.close {
+        font-size: 16px;
+    }
+
+    #create.modal {
+        width: 90%;
+    }
+
+    #create.modal .contents {
+        margin-top: 30px;
+    }
+
+    #create.modal .user_icon .my_schedule {
+        width: 70px;
+        height: 70px
+    }
+
+    #create.modal form {
+        display: block;
+    }
+
+    #create.modal .button {
+        margin: 20px 20px 20px 0;
+    }
+
+    #create.modal .button .btn {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    #delete.modal .top input {
+        font-size: 22px;
+        width: 80%;
+    }
+
+    #delete.modal .top span.close {
+        font-size: 16px;
+    }
+
+    #delete.modal .user_icon .my_schedule {
+        width: 50px;
+        height: 50px
+    }
+
+    #delete.modal .detail h2 {
+        font-size: 16px;
+    }
+
+    #delete.modal .button {
+        margin-top: 20px;
+    }
+
+    #delete.modal .btn {
+        font-size: 10px;
+        padding: 5px;
+    }
+
+    #invitation.modal .group {
+        padding: 0;
+    }
+
+    #invitation.modal .group_image img {
+        height: 70px;
+        width: 70px;
+    }
+
+    #invitation.modal h2 {
+        font-size: 22px;
+    }
+
+    #invitation.modal .group_detail p {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    #invitation.modal h3 {
+        font-size: 24px;
+        margin-top: 30px;
+    }
+
+    #invitation.modal form {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #invitation.modal button {
+        padding: 5px;
+        font-size: 16px;
+        width: 50%;
+    }
+
+    #invitation.modal strong {
+        font-size: 12px;
+    }
+}
+
+@media (max-height: 700px) {
+    #profile.modal {
+        height: 90vh;
+    }
+
+    #profile.modal .button {
+        padding-bottom: 20px;
     }
 }
