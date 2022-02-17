@@ -16,7 +16,7 @@ html {
 .store {
     padding: 20px 0;
     text-align: center;
-    width: 40%;
+    width: 600px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -648,4 +648,87 @@ html {
 #detail .button_area button:hover {
     opacity: 0.7;
     transition: all 0.5s;
+}
+
+#searched.modal {
+    width: 600px;
+    background: ghostwhite;
+    border-radius: 10px;
+    box-shadow: 0 0 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 10px 10px 0;
+    display: none;
+}
+
+#searched.modal .top {
+    position: sticky;
+    border-bottom: 1px solid gray;
+    background: ghostwhite;
+    padding: 10px;
+}
+
+#searched.modal span.close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 20px;
+}
+
+#searched.modal label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#searched.modal .contents {
+    height: 40vh;
+    overflow-y: auto;
+}
+
+#searched.modal .user_icon {
+    width: 500px;
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#searched.modal .user_icon img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+#searched.modal .button_area {
+    border-top: 1px solid gray;
+    display: flex;
+    justify-content: space-around;
+    background: ghostwhite;
+}
+
+#searched.modal .button_area button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 20px 0 20px;
+    font-size: 20px;
+    color: white;
+}
+
+#searched.modal .button_area button:hover {
+    opacity: 0.7;
+    transition: all 0.5s;
+}
+
+#searched.modal .button_area .close {
+    background: skyblue;
+}
+
+#searched.modal .button_area .button {
+    background: orange;
 }

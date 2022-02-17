@@ -47,13 +47,21 @@ class GroupController extends Controller
         }
         $user->save();
 
-        if($num != 0) {
-            $invitations = explode(',', $num);
-            foreach($invitations as $invitation) {
+        $invitations = explode(',', $num);
+        foreach($invitations as $invitation) {
+            if($invitation != 0) {
                 $inv_user = User::find($invitation);
-                $inv_user->invitation = $group->id;
-                $inv_user->save();
-            }
+                if($inv_user->id != $user->id) {
+                    if($inv_user->invitation == 0) {
+                        $inv_user->invitation = $group->id;
+                        $inv_user->save();
+                    } else {
+                        $inv_user->invitation .= ' ' .$group->id;
+                        $user->invitation = trim($user->invitation);
+                        $inv_user->save();
+                    }
+                }
+            }    
         }
 
         return redirect('/group_show');
@@ -90,8 +98,10 @@ class GroupController extends Controller
     {
         $group = Group::find($id);
         $group->group_name = $request->group_name;
-        $group->group_image = $request->group_image->store('public/group-image');
-        $group->group_image = str_replace('public/group-image/', '', $group->group_image);
+        if(isset($request->group_image)) {
+            $group->group_image = $request->group_image->store('public/group-image');
+            $group->group_image = str_replace('public/group-image/', '', $group->group_image);
+        }
         $group->save();
         
         return redirect('/group_show');
@@ -100,7 +110,23 @@ class GroupController extends Controller
     public function destroy($id) 
     {
         $group = Group::find($id);
-        $group->delete();        
+        $group->delete();      
+        
+        $inv_users = User::where('invitation', '!=', 0)->get();
+        foreach($inv_users as $inv_user) {
+            $re_inv = null;
+            $inv_nums = explode(' ', $inv_user->invitation);
+            foreach($inv_nums as $inv_num) {
+                if($inv_num != $id) {
+                    $re_inv .= $inv_num . ' ';
+                } elseif($inv_num == $id && count($inv_nums) == 1) {
+                    $re_inv = 0;
+                }
+            }
+            $re_inv = trim($re_inv);
+            $inv_user->invitation = $re_inv;
+            $inv_user->save();
+        }
         
         $join_users = User::where('belongs_group', '!=', null)->get();
         foreach($join_users as $join_user) {
@@ -153,10 +179,40 @@ class GroupController extends Controller
                 }
             } else {
                 $group->delete();
+                $inv_users = User::where('invitation', '!=', 0)->get();
+                foreach($inv_users as $inv_user) {
+                    $re_inv = null;
+                    $inv_nums = explode(' ', $inv_user->invitation);
+                    foreach($inv_nums as $inv_num) {
+                        if($inv_num != $id) {
+                            $re_inv .= $inv_num . ' ';
+                        } elseif($inv_num == $id && count($inv_nums) == 1) {
+                            $re_inv = 0;
+                        }
+                    }
+                    $re_inv = trim($re_inv);
+                    $inv_user->invitation = $re_inv;
+                    $inv_user->save();
+                }
             }
 
             if($count == count($belongs_users) && $group->created_user_id == $user->id) {
                 $group->delete();
+                $inv_users = User::where('invitation', '!=', 0)->get();
+                foreach($inv_users as $inv_user) {
+                    $re_inv = null;
+                    $inv_nums = explode(' ', $inv_user->invitation);
+                    foreach($inv_nums as $inv_num) {
+                        if($inv_num != $id) {
+                            $re_inv .= $inv_num . ' ';
+                        } elseif($inv_num == $id && count($inv_nums) == 1) {
+                            $re_inv = 0;
+                        }
+                    }
+                    $re_inv = trim($re_inv);
+                    $inv_user->invitation = $re_inv;
+                    $inv_user->save();
+                }
             }
         }
             
@@ -241,7 +297,18 @@ class GroupController extends Controller
                 $user->belongs_group = $input;
             }
         }
-        $user->invitation = 0;
+        $invitations = explode(' ', $user->invitation);
+        array_shift($invitations);
+        $re_inv = null;
+        foreach($invitations as $invitation) {
+            $re_inv .= $invitation. ' ';
+        }
+        $re_inv = trim($re_inv);
+        if($re_inv == null) {
+            $user->invitation = 0;
+        } else {
+            $user->invitation = $re_inv;
+        }
         $user->save();
         return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
     }
@@ -272,6 +339,7 @@ class GroupController extends Controller
     public function invUser($id, $group_id) 
     {
         $user = User::find($id);
+        $invitations = explode(' ', $user->invitation);
         $belongs_groups = $user->belongs_group;
         $belongs_group = explode(' ', $belongs_groups);
         foreach($belongs_group as $belong_group) {
@@ -280,9 +348,24 @@ class GroupController extends Controller
                 return $message;
             }
         }
-        $user->invitation = $group_id;
-        $user->save();
+
+        foreach($invitations as $invitation) {
+            if($user->invitation == 0) {
+                $user->invitation = $group_id;
+                $user->save();
+            } else {
+                if($invitation == $group_id) {
+                    $message = 'error';
+                    return $message;
+                }
+                $user->invitation .= ' ' .$group_id;
+                $user->invitation = trim($user->invitation);
+                $user->save();
+            }
+        }
 
         return $user;
     }
 }
+
+//削除ではなく脱退のほうでグループが消滅した際の挙動から

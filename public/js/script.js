@@ -23,11 +23,11 @@ $(function() {
 
     //modal
     $('.cell_link').click(function() {
+        $('.store_area').css({'position':'sticky', 'right':''});
         var day = $(this).data('id');
         var group_id = $(this).data('group-id');
         var user_id = $('#edit').data('user-id');
         $('.day').attr("value", day);
-        console.log(day);
         var classVal = $(this).attr('class'); 
         var classVals = classVal.split(' ');  
         var year = classVals[1];
@@ -41,11 +41,15 @@ $(function() {
         })
         .then(
             function(param){
-                var date_schedule = JSON.parse(param);
-                var count = Object.keys(date_schedule).length;
+                if(param.length) {
+                    var date_schedule = JSON.parse(param);
+                    var count = Object.keys(date_schedule).length;
+                } else {
+                    var count = 0;
+                }
                 
                 if(count > 0) {
-                    $('#edit, .overlay').fadeIn();
+                    $('#edit, .overlay').fadeIn();    
                     for(let i = 0; i < count; i++) {
                         $(`.detail${date_schedule[i].schedule_id}`).css('display', 'flex');
                         $(`.textarea_edit${date_schedule[i].schedule_id}`).val(date_schedule[i].schedule);
@@ -98,6 +102,16 @@ $(function() {
                             } 
                         });
                     }
+                    
+                    var modal_height = $('#edit.modal').height();
+                    var pos_height = $('#edit_form').outerHeight();
+                    var judge = modal_height - pos_height;
+                    if(judge > 0) {
+                        $('.store_area').css('position', 'absolute');
+                        if($('#edit.modal').width() < 600) {
+                            $('.store_area').css('right', '0');
+                        }
+                    }
                 } else {
                     $('#create, .overlay').fadeIn();
                     $('#create .detail').css('display', 'block');
@@ -120,6 +134,7 @@ $(function() {
                             $(this).css("display", "none");
                         });
                         $('#edit_form').attr('action', ` ${url}/store/${year}/${month}`);
+                        $('#edit .btn.submit').attr('type', 'submit').html('登録する').css('background', 'orange');
                     });   
                 });  
             },

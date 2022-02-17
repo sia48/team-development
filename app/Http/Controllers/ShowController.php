@@ -64,21 +64,36 @@ class ShowController extends Controller
         $user = Auth::user();
         $date_key = $year . '年' . $month . '月';
 
-        $schedules = Schedule::select('users.id', 'users.group_id', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
+        $schedules = Schedule::select('users.id', 'users.group_id', 'users.belongs_group', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
                 ->join('users', 'users.id', '=', 'schedules.user_id')
-                ->where('users.group_id', '=', $user->group_id)
                 ->where('schedules.schedule_date', 'like', "%$date_key%")
                 ->get();
+
+        foreach($schedules as $schedule) {
+            if(isset($schedule->belongs_group)) {
+                $belong_groups = explode(' ', $schedule->belongs_group );
+                foreach($belong_groups as $belong_group) {
+                    if($belong_group == $user->group_id) {
+                        $view_schedules[] = $schedule;
+                        break;
+                    }
+                }
+            }
+        }
 
         $my_schedules = Schedule::select('id', 'user_id', 'schedule', 'schedule_date')
                     ->where('user_id', '=', $user->id)
                     ->where('schedule_date', 'like', "%$date_key%")
                     ->get();
 
-        if($user->invitation > 0) {
-            $groups = Group::find($user->invitation);
-            $author_id = $groups->created_user_id;
-            $author = User::find($author_id);
+        if($user->invitation != 0) {
+            $invitations = explode(' ', $user->invitation);
+            foreach($invitations as $invitation) {
+                $groups = Group::find($invitation);
+                $author_id = $groups->created_user_id;
+                $author = User::find($author_id);
+                break;
+            }
         } else {
             $groups = null;
             $author = null;
@@ -109,7 +124,7 @@ class ShowController extends Controller
                 'holidays' => $holidays, 
                 'google_holidays' => $google_holidays, 
                 'user' => $user, 
-                'schedules' => $schedules, 
+                'view_schedules' => $view_schedules, 
                 'groups' => $groups, 
                 'author' => $author, 
                 'my_schedules' => $my_schedules
@@ -174,12 +189,25 @@ class ShowController extends Controller
 
     public function test($day, $group_id, $user_id)
     {   
-        $contents = Schedule::select('users.id', 'users.group_id', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
-        ->join('users', 'users.id', '=', 'schedules.user_id')
-        ->where('users.group_id', '=', $group_id)
-        ->where('schedules.schedule_date', '=', $day)
-        ->get();
+        $contents = Schedule::select('users.id', 'users.group_id', 'users.belongs_group', 'schedules.user_id', 'schedules.id as schedule_id', 'schedules.schedule_date', 'schedules.schedule')
+            ->join('users', 'users.id', '=', 'schedules.user_id')
+            ->where('schedules.schedule_date', '=', $day)
+            ->get();
 
-        return $contents;
+            foreach($contents as $content) {
+                if(isset($content->belongs_group)) {
+                    $belong_groups = explode(' ', $content->belongs_group );
+                    foreach($belong_groups as $belong_group) {
+                        if($belong_group == $group_id) {
+                            $view_schedules[] = $content;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(empty($view_schedules)) {
+                $view_schedules = null;
+            }
+            return $view_schedules;
     }
 }

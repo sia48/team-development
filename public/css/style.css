@@ -580,6 +580,10 @@ th {
     margin-top: 30px;
 }
 
+#edit.modal form {
+    display: block;
+}
+
 #edit.modal .details {
     width: 100%;
     display: flex;
@@ -589,7 +593,9 @@ th {
 
 #edit.modal .detail {
     margin-top: 10px;
+    padding-bottom: 5px;
     width: 100%;
+    border-bottom: 1px dotted gray;
 }
 
 #edit.modal .other.detail {
@@ -599,6 +605,7 @@ th {
     padding: 5px;
     margin-top: 20px;
     align-items: center;
+    border: none;
 }
 
 #edit.modal .other.detail .user_icon p {
@@ -624,7 +631,6 @@ th {
     border-radius: 10px;
     padding: 10px 10px;
     margin-top: 5px;
-    margin-bottom: 5px;
     color: white;
 }
 
@@ -652,7 +658,7 @@ th {
     bottom: 0;
     width: 100%;
     background: ghostwhite;
-    padding-top: 20px;
+    padding: 20px 10px 0;
 }
 
 #edit.modal .store_area .store {
@@ -665,6 +671,7 @@ th {
     flex-direction: column-reverse;
     align-items: end;
     width: 25%;
+    padding-bottom: 10px;
 }
 
 #edit.modal .textarea_store {
@@ -676,6 +683,7 @@ th {
     width: 80%;
     letter-spacing: 0;
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 #delete.modal .button {
@@ -690,7 +698,7 @@ th {
     color: red;
 }
 
-#delete.modal .close {
+#delete.modal byn.close {
     background: skyblue;
 }
 

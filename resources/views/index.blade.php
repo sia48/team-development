@@ -61,7 +61,7 @@
                 <ul>
                     <li><a href="{{ route('group') }}"><i class="fas fa-users-cog"></i>グループ作成</a></li>
                     <li><a href="{{ route('group_show') }}"><i class="fas fa-users"></i>グループ切り替え</a></li>
-                    <li class="mf"><a href="{{ route('suito',['year' => $year,'month' => $month]) }}"><i class="fas fa-money-check-alt"></i>ホーム画面へ</a></li>
+                    <li class="mf"><a href="{{ route('suito',['year' => $year,'month' => $month]) }}"><i class="fas fa-money-check-alt"></i>MF画面へ</a></li>
                     <li class="logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <form action="{{ route('logout') }}" method="post">
@@ -291,9 +291,9 @@
                         <th>土</th>
                     </tr> 
                     @foreach($dates as $date)
-                    <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
-                    <?php $js_year = $date->year;?>
-                    <?php $js_month = $date->month;?>
+                        <?php $date_modal = $date->year . '年' . $date->month . '月' . $date->day . '日'; ?>
+                        <?php $js_year = $date->year;?>
+                        <?php $js_month = $date->month;?>
 
                         @if($date->dayOfWeek == 0)
                             <tr>
@@ -325,7 +325,7 @@
                                     @endif
                                 </a>
 
-                                @foreach($schedules as $schedule)
+                                @foreach($view_schedules as $schedule)
                                     @if($schedule->schedule_date == $date_modal)
                                         <p class="has_schedule">●</p>
                                         @break
@@ -390,7 +390,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @foreach($schedules as $schedule)
+                    @foreach($view_schedules as $schedule)
                         @if($schedule->user_id !== $user->id)
                             <div class="other detail detail{{ $schedule->schedule_id }}" style="display:none"> 
                                 <div class="user_icon">
@@ -451,8 +451,7 @@
             <div class="group">
                 <div class="group_detail">
                     <div class="group_image">
-                        <!-- <img src="{{--$groups->image--}}" alt="グループのアイコン"> -->
-                        <img src="{{ asset('img/icon-default-user.svg') }}" alt="グループのアイコン">
+                        <img src="{{ asset('storage/group-image/'.$groups->group_image) }}" alt="グループのアイコン">
                         <h2 data-group-num-id="{{ $groups->id }}" class="group_name">{{ $groups->group_name }}</h2>
                     </div>
                     <p>作成者: <a href="">{{ $author->name }}</a></p>

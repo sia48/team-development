@@ -78,6 +78,20 @@
             </div> 
         </div>  
     </div>
+
+    <div class="modal" id="searched"> <!-- 検索用モーダル -->
+        <div class="top">
+            <h2>検索対象のユーザーが複数ヒットしました<br>招待するユーザーを選択して下さい</h2>
+            <span class="close">x</span>
+        </div>
+        <div class="contents">
+        </div>
+        <div class="button_area">
+            <button type="button" class="close">キャンセル</button>
+            <button type="button" class="button">選択する</button>
+        </div>
+    </div>
+
     <script src="{{ asset('js/group.js') }}"></script>
 </body>
 </html>
