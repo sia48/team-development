@@ -1,8 +1,4 @@
 @media (max-width: 1200px) {
-    .store {
-        width: 50%;
-    }
-
     .title h2 {
         font-size: 26px;
     }
@@ -53,7 +49,7 @@
     }
 
     .store .searched .search_user_name {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .show .group_icon {
@@ -72,10 +68,6 @@
 }
 
 @media (max-width: 900px) {
-    .store {
-        width: 60%;
-    }
-
     #detail {
         width: 90%;
     }
@@ -83,7 +75,7 @@
 
 @media (max-width: 767px) {
     .store {
-        width: 60%;
+        width: 70%;
         padding: 10px 0;
     }
 
@@ -157,6 +149,10 @@
         line-height: 2;
     }
 
+    .store .searched .search_user_name {
+        font-size: 14px;
+    }
+
     .store .button_area a {
         font-size: 14px;
     }
@@ -177,6 +173,10 @@
 @media (max-width: 600px) {
     .store {
         width: 90%;
+    }
+
+    .store .searched .search_user_name {
+        font-size: 12px;
     }
 
     .show {
@@ -312,6 +312,10 @@
         margin-left: 10px;
     }
 
+    #detail .invd {
+        font-size: 12px;
+    }
+
     #detail .invitation .inv_btn {
         font-size: 10px;
     }
@@ -328,5 +332,40 @@
 
     #detail .button_area button {
         font-size: 12px;
+    }
+
+    #searched.modal {
+        width: 90%;
+    }
+
+    #searched.modal .top {
+        padding: 5px;
+    }
+
+    #searched.modal .top h2 {
+        font-size: 12px;
+    }
+
+    #searched.modal .contents {
+        height: 30vh;
+    }
+
+    #searched.modal .user_icon {
+        width: 100px;
+        margin: 15px 0 0 20px;
+    }
+
+    #searched.modal .user_icon img {
+        width: 40px;
+        height: 40px;
+    }
+
+    #searched.modal label {
+        font-size: 12px;
+    }
+
+    #searched.modal .button_area button {
+        font-size: 14px;
+        padding: 5px 10px;
     }
 }
