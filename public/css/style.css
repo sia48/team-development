@@ -674,7 +674,7 @@ th {
     padding-bottom: 10px;
 }
 
-#edit.modal .textarea_store {
+#edit.modal .textarea_edit_store {
     height: 15vh;
     width: 100%;
 }

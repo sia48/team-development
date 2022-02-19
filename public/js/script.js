@@ -21,6 +21,35 @@ $(function() {
         });
     });
 
+    $('.textarea_store').on('input', function() {
+        let cnt = $(this).val().length;
+        if(cnt > 100) {
+            $('.validate_store').css('display', 'block').next().next().prop('disabled', true);
+        } else {
+            $('.validate_store').css('display', 'none').next().next().prop('disabled', false);
+        }
+    });
+
+    $('.textarea_edit').on('input', function() {
+        let cnt = $(this).val().length;
+        if(cnt > 100) {
+            $('.validate_edit').css('display', 'block');
+            $('.link_update').prop('disabled', true);
+        } else {
+            $('.validate_edit').css('display', 'none');
+            $('.link_update').prop('disabled', false);
+        }
+    });
+
+    $('.textarea_edit_store').on('input', function() {
+        let cnt = $(this).val().length;
+        if(cnt > 100) {
+            $('.validate_edit_store').css('display', 'block').next().next().prop('disabled', true);
+        } else {
+            $('.validate_edit_store').css('display', 'none').next().next().prop('disabled', false);
+        }
+    });
+
     //modal
     $('.cell_link').click(function() {
         $('.store_area').css({'position':'sticky', 'right':''});

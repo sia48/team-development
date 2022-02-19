@@ -324,13 +324,22 @@
                                         @endif
                                     @endif
                                 </a>
-
-                                @foreach($view_schedules as $schedule)
-                                    @if($schedule->schedule_date == $date_modal)
-                                        <p class="has_schedule">●</p>
-                                        @break
-                                    @endif
-                                @endforeach
+                                @if(isset($view_schedules))
+                                    @foreach($view_schedules as $schedule)
+                                        @if($schedule->schedule_date == $date_modal)
+                                            <p class="has_schedule">●</p>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                @endif
+                                @if(empty($view_schedules))
+                                    @foreach($my_schedules as $my_schedule)
+                                        @if($my_schedule->schedule_date == $date_modal)
+                                            <p class="has_schedule">●</p>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                @endif
                             </td>
                             
                         @if($date->dayOfWeek == 6)
@@ -356,11 +365,12 @@
                 </div>
                 <div class="details">
                     <div class="detail">
-                        <textarea name="schedule" required></textarea>
+                        <textarea class="textarea_store" name="schedule" required></textarea>
                     </div>
                 </div>
             </div>
             <div class="button">
+                <p class="validate_store" style="display:none; color:red">入力できる文字数は100文字までです</p>
                 <button type="button" class="btn close">一覧に戻る</button>
                 <button type="submit" class="btn submit">登録する</button>
             </div>
@@ -381,8 +391,9 @@
                             <div class="user_icon">
                                 <img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" class="my_schedule">
                                 <p class="my_name">{{ $user->name }}</p>
+                                <p class="validate_edit" style="display:none; color:red">入力できる文字数は100文字までです</p>
                             </div>
-                            <textarea class="textarea_edit textarea_edit{{ $my_schedule->id }}" name="schedule_edit" placeholder="" disabled >{{ $my_schedule->schedule }}</textarea>
+                            <textarea class="textarea_edit textarea_edit{{ $my_schedule->id }}" name="schedule_edit" placeholder="" disabled maxlenght="250">{{ $my_schedule->schedule }}</textarea>
                             <div class="links">
                                 <button type="button" class="link_btn link_edit link_edit{{ $my_schedule->id }}">編集する</button>
                                 <button type="button" class="link_btn link_update link_update{{ $my_schedule->id }}" style="display:none">更新する</button>
@@ -390,24 +401,27 @@
                             </div>
                         </div>
                     @endforeach
-                    @foreach($view_schedules as $schedule)
-                        @if($schedule->user_id !== $user->id)
-                            <div class="other detail detail{{ $schedule->schedule_id }}" style="display:none"> 
-                                <div class="user_icon">
-                                    <img src="{{ asset('storage/user-image/'.$schedule->user->profile_photo_path) }}" alt="ユーザーのアイコン">
-                                    <p class="schedule_user_name">{{ $schedule->user->name }}</p>
+                    @if(isset($view_schedules))
+                        @foreach($view_schedules as $schedule)
+                            @if($schedule->user_id !== $user->id)
+                                <div class="other detail detail{{ $schedule->schedule_id }}" style="display:none"> 
+                                    <div class="user_icon">
+                                        <img src="{{ asset('storage/user-image/'.$schedule->user->profile_photo_path) }}" alt="ユーザーのアイコン">
+                                        <p class="schedule_user_name">{{ $schedule->user->name }}</p>
+                                    </div>
+                                    <p class="same_group_users_schedule">{{ $schedule->schedule }}</p>
                                 </div>
-                                <p class="same_group_users_schedule">{{ $schedule->schedule }}</p>
-                            </div>
-                        @endif
-                    @endforeach
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="store_area">
                 <div class="store">
-                    <textarea name="schedule" class="textarea_store" placeholder="新しい予定を登録する場合はこちら" required></textarea>
+                    <textarea name="schedule" class="textarea_edit_store" placeholder="新しい予定を登録する場合はこちら" required></textarea>
                 </div>
                 <div class="button">
+                    <p class="validate_edit_store" style="display:none; color:red">入力できる文字数は100文字までです</p>
                     <button type="button" class="btn close">一覧に戻る</button>
                     <button type="button" class="btn submit">登録する</button>
                 </div>
@@ -476,7 +490,7 @@
             <span class="close">x</span>
         </div>
         <div class="contents">
-            <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
+            <div class="user_icon">
                 <a href=""><img src="{{ asset('storage/user-image/'.$user->profile_photo_path) }}" alt="自分のアイコン" id="user_image"></a>
             </div>
             <div class="profile">
@@ -487,7 +501,7 @@
                         <input type="file" name="user_image" value="{{ $user->profile_photo_path }}" id="image">変更する際は選択して下さい
                     </label>
                     <p>ニックネーム</p>
-                    <input type="text" name="name" value="{{ $user->name }}">
+                    <input type="text" name="name" value="{{ $user->name }}" required maxlength="50">
                     <p>パスワード</p>
                     <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい" minlength="8" class="password">
                     <p>パスワード確認</p>
