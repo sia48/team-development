@@ -689,7 +689,7 @@ html {
 }
 
 #searched.modal .user_icon {
-    width: 500px;
+    width: 90%;
     margin-left: auto;
     margin-top: 20px;
     margin-bottom: 10px;

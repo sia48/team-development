@@ -22,7 +22,7 @@
                 <h2>メンバー（{{ count($belongsTo_users) }}）</h2>
                 @foreach($belongsTo_users as $belongsTo_user)
                     <div class="member">
-                        <div class="user_icon"> <!-- TODO : ここでログインユーザーの画像を取ってくる -->
+                        <div class="user_icon">
                             <img src="{{ asset('storage/user-image/'.$belongsTo_user->profile_photo_path) }}" alt="自分のアイコン">
                         </div>
                         <h3>{{ $belongsTo_user->name }}</h3>
@@ -45,7 +45,7 @@
                                 @if($group->created_user_id === $user->id)
                                     <button type="button" id="delete">グループを削除する</button>
                                 @endif
-                                <button type="button" class="exit">グループを抜ける</button><!-- submitにする -->
+                                <button type="button" class="exit">グループを抜ける</button>
                             </div>
                         </div>
                         <div class="group_detail">
@@ -55,6 +55,11 @@
                             </label>
                             <h4 class="group_name">グループ名</h4>
                             <input type="text" name="group_name" value="{{ $group->group_name }}">
+                            @if ($errors->any())
+                                @foreach ($errors->all() as $error)
+                                    <li style="color:red">{{ $error }}</li>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </form>

@@ -17,10 +17,11 @@ class GroupController extends Controller
     public function store(Request $request, $num) 
     {
         $request->validate([
-            'group_name' => 'required'
+            'group_name' => 'required|max:50'
         ],
         [
-            'group_name.required' => 'グループ名を入力して下さい'
+            'group_name.required' => 'グループ名を入力して下さい',
+            'group_name.max' => 'グループ名は最大50文字までです'
         ]);
 
         $group = new Group();
@@ -34,6 +35,7 @@ class GroupController extends Controller
         $user = Auth::user();
         if($user->group_id == 0) {
             $user->group_id = $group->id;
+            $user->belongs_group = $group->id;
         } else {
             $belongs_group = $user->belongs_group;
             $belongs_group = explode(' ', $belongs_group);
@@ -70,10 +72,13 @@ class GroupController extends Controller
     public function show() 
     { 
         $user = Auth::user();
-        $belongs_group = $user->belongs_group;
-        $belongs_group = explode(' ', $belongs_group);
-        foreach($belongs_group as $belong_group) {
-            $groups[] = Group::find($belong_group);
+        $groups = [];
+        if(isset($user->belongs_group)) {
+            $belongs_group = $user->belongs_group;
+            $belongs_group = explode(' ', $belongs_group);
+            foreach($belongs_group as $belong_group) {
+                $groups[] = Group::find($belong_group);
+            }
         }
         return view('group/group-show', ['groups' => $groups, 'user' => $user]);
     }
@@ -96,6 +101,14 @@ class GroupController extends Controller
 
     public function update(Request $request, $id) 
     {
+        $request->validate([
+            'group_name' => 'required|max:50'
+        ],
+        [
+            'group_name.required' => 'グループ名を入力して下さい',
+            'group_name.max' => 'グループ名は最大50文字までです'
+        ]);
+
         $group = Group::find($id);
         $group->group_name = $request->group_name;
         if(isset($request->group_image)) {
@@ -340,6 +353,8 @@ class GroupController extends Controller
     {
         $user = User::find($id);
         $invitations = explode(' ', $user->invitation);
+        $re_inv = null;
+        $key = array_search($group_id, $invitations);
         $belongs_groups = $user->belongs_group;
         $belongs_group = explode(' ', $belongs_groups);
         foreach($belongs_group as $belong_group) {
@@ -352,20 +367,18 @@ class GroupController extends Controller
         foreach($invitations as $invitation) {
             if($user->invitation == 0) {
                 $user->invitation = $group_id;
-                $user->save();
             } else {
-                if($invitation == $group_id) {
+                if($key != false) {
                     $message = 'error';
                     return $message;
                 }
-                $user->invitation .= ' ' .$group_id;
-                $user->invitation = trim($user->invitation);
-                $user->save();
+                $re_inv .= ' ' .$invitation;
             }
         }
+        $re_inv .= ' ' .$group_id;
+        $user->invitation = trim($re_inv);
+        $user->save();
 
         return $user;
     }
 }
-
-//削除ではなく脱退のほうでグループが消滅した際の挙動から

@@ -81,6 +81,10 @@ class ShowController extends Controller
             }
         }
 
+        if(empty($view_schedules)) {
+            $view_schedules = null;
+        }
+
         $my_schedules = Schedule::select('id', 'user_id', 'schedule', 'schedule_date')
                     ->where('user_id', '=', $user->id)
                     ->where('schedule_date', 'like', "%$date_key%")
@@ -141,7 +145,7 @@ class ShowController extends Controller
     }
 
     public function store(Request $request, $year, $month)
-    {
+    {   
         $content = new Schedule();
         $content->user_id = Auth::user()->id;
         $content->schedule = $request->schedule;
@@ -194,6 +198,9 @@ class ShowController extends Controller
             ->where('schedules.schedule_date', '=', $day)
             ->get();
 
+            $view_schedules = [];
+            $my_schedules = [];
+
             foreach($contents as $content) {
                 if(isset($content->belongs_group)) {
                     $belong_groups = explode(' ', $content->belongs_group );
@@ -205,9 +212,17 @@ class ShowController extends Controller
                     }
                 }
             }
-            if(empty($view_schedules)) {
-                $view_schedules = null;
+
+            foreach($contents as $content) {
+                if($content->user_id == $user_id) {
+                    $my_schedules[] = $content;
+                }
             }
-            return $view_schedules;
+
+            if(empty($view_schedules)) {
+                return $my_schedules;
+            } else {
+                return $view_schedules;
+            }
     }
 }
