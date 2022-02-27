@@ -94,7 +94,6 @@ $(function() {
                         $(`.link_edit${date_schedule[i].schedule_id}`).click(function(){
                             $('.textarea_edit').each(function() {
                                 $('.textarea_edit').prop('disabled', true);
-                                $('#edit .btn.submit').css('background', 'limegreen');
                             });
                             $('.link_update').each(function() {
                                 $('.link_update').css('display', 'none');
@@ -103,18 +102,18 @@ $(function() {
                                 $('.link_edit').css('display', 'block');
                             });
                             $('.textarea_store').val('');
-                            $('#edit .btn.submit').html('入力する');
+                            $('#edit .btn.submit').html('入力する').css('background', 'limegreen').attr('type', 'button');
                             $(this).css('display', 'none');
                             $(this).next('.link_update').css('display', 'block');
                             $(`.textarea_edit${date_schedule[i].schedule_id}`).prop('disabled', false).focus();
-                            $('.textarea_store').prop('disabled', true);
+                            $('.textarea_edit_store').prop('disabled', true);
                             $('#edit_form').attr('action', ` ${url}/edit/${year}/${month}/${date_schedule[i].schedule_id}`);
                             $(`.link_update${date_schedule[i].schedule_id}`).click(function(){
                                 $('#edit_form').submit();
                             });
                         });
                         $('#edit .btn.submit').click(function() {
-                            $('.textarea_store').prop('disabled', false).focus();
+                            $('.textarea_edit_store').prop('disabled', false).focus();
                             $('#edit_form').attr('action', ` ${url}/store/${year}/${month}`);
                             $('.textarea_edit').each(function() {
                                 $('.textarea_edit').prop('disabled', true);
@@ -126,7 +125,7 @@ $(function() {
                                 $('.link_edit').css('display', 'block');
                             });
                             $(this).attr('type', 'submit').html('登録する').css('background', 'orange');
-                            if($('.textarea_store').val() == '') {
+                            if($('.textarea_edit_store').val() == '') {
                                 return false;
                             } 
                         });

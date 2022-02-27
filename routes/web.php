@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// 会員登録画面
-// Route::get('/user','App\Http\Controllers\UserController@user')->name('user');
-
-// ログイン画面
-// Route::get('/rogin','App\Http\Controllers\UserController@rogin')->name('rogin');
-
-// ホーム画面（スケジュール）
-//Route::get('/', function () {
-//    return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
-//});
 Route::get('/{year}/{month}','App\Http\Controllers\ShowController@showCalendar')->name('calendar');
 Route::post('/request', 'App\Http\Controllers\ShowController@requestCalendar')->name('request');
 
@@ -63,11 +53,6 @@ Route::get('/suitos/{year}/{month}','App\Http\Controllers\SuitoController@suitoI
 
 Route::get('/money','App\Http\Controllers\MoneyController@money')->name('money');
 
-//Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-//    return view('dashboard');
-//})->name('dashboard');
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     return redirect()->route('calendar', ['year' => date('Y'), 'month' => date('n')]);
 })->name('dashboard');
-

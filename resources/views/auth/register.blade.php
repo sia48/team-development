@@ -16,7 +16,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required maxlength="255" />
             </div>
 
             <div class="mt-4">
@@ -24,9 +24,11 @@
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" maxlength="128" />
             </div>
 
+            <p id="error" style="display:none; color:red">パスワードは128文字以下で入力して下さい</p>
+
             <div class="mt-4">
                 <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" maxlength="128" />
+                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" maxlength="128"/>
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
@@ -47,7 +49,7 @@
             @endif
 
             <div class="flex items-center justify-end mt-4">
-                <x-jet-button class="ml-4">
+                <x-jet-button class="ml-4" id="register">
                     {{ __('Register') }}
                 </x-jet-button>
             </div>
@@ -57,5 +59,21 @@
             </a>
 
         </form>
+
+        <script>
+            let password = document.getElementById('password');
+            password.addEventListener('input', function(e) {
+                let value = e.target.value;
+                let len = value.length;
+                if (len > 128) {
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('register').disabled = true;
+                } else {
+                    document.getElementById('error').style.display = 'none';
+                    document.getElementById('register').disabled = false;
+                }
+            });
+        </script>
+
     </x-jet-authentication-card>
 </x-guest-layout>

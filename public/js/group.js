@@ -3,14 +3,24 @@ $(function() {
 
     $('#delete').click(function() {
         var id = $('.group_id').text();
-        $('#update').attr('action', `${url}/group/delete/${id}`);
-        $('#update').submit();
-    })
+        if(!confirm('本当に削除しますか？')){
+            return false;
+        } else {
+            alert('削除しました');
+            $('#update').attr('action', `${url}/group/delete/${id}`);
+            $('#update').submit();    
+        }
+    });
 
     $('.exit').click(function() {
         var id = $('.group_id').text();
-        $('#update').attr('action', `${url}/group/exit/${id}`);
-        $('#update').submit();
+        if(!confirm('本当に脱退しますか？')) {
+            return false;
+        } else {
+            alert('脱退しました');
+            $('#update').attr('action', `${url}/group/exit/${id}`);
+            $('#update').submit();
+        }
     });
 
     $('.search').click(function() {

@@ -146,6 +146,14 @@ class ShowController extends Controller
 
     public function store(Request $request, $year, $month)
     {   
+        $request->validate([
+            'schedule' => 'required|max:100'
+        ],
+        [
+            'schedule.required' => '予定を入力して下さい',
+            'schedule.max' => '最大100文字までです'
+        ]);
+
         $content = new Schedule();
         $content->user_id = Auth::user()->id;
         $content->schedule = $request->schedule;
@@ -157,6 +165,16 @@ class ShowController extends Controller
 
     public function edit($year, $month, $id, Request $request)
     {   
+        $request->validate([
+            'schedule' => 'max:100',
+            'schedule_edit' => 'required|max:100'
+        ],
+        [
+            'schedule_edit.required' => '予定を入力して下さい',
+            'schedule_edit.max' => '最大100文字までです',
+            'schedule.max' => '最大100文字までです'
+        ]);
+
         $content = Schedule::find($id);
         $content->schedule = $request->schedule_edit;
         $content->save();
@@ -176,7 +194,7 @@ class ShowController extends Controller
         $user->name = $request->name;
         if(isset($request->password)) {
             $rules = [
-                'password' => ['confirmed']
+                'password' => 'confirmed|max:128|min:8'
             ];
             $this->validate($request, $rules);
             $user->password = Hash::make($request->password);

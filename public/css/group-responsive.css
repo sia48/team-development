@@ -192,6 +192,10 @@
         height: 40px;
     }
 
+    .show .belong_group h3 {
+        width: 45%;
+    }
+
     .show .belong_group a {
         font-size: 16px;
     }

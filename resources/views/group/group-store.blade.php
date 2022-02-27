@@ -30,7 +30,7 @@
                         </label>
                     </div>
                     <div class="group_name">
-                        <input type="text" name="group_name" placeholder="グループ名" >
+                        <input type="text" name="group_name" placeholder="グループ名（最大50文字）" maxlength="50">
                         @if ($errors->any())
                             @foreach ($errors->all() as $error)
                                 <li style="color:red">{{ $error }}</li>
