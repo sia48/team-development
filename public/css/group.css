@@ -323,6 +323,7 @@ html {
 
 .show .belong_group h3 {
     margin-left: 20px;
+    width: 350px;
 }
 
 .show .belong_group .button_choice {

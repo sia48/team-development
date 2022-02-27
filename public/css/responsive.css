@@ -176,7 +176,7 @@
         z-index: 10;
         cursor: pointer;
         position: fixed;
-        top: 60px;
+        top: 90px;
         right: 1px;
         width: 60%;
         height: calc(100vh - 60px);
@@ -304,6 +304,13 @@
         height: 50px;
     }
 
+    .my-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 150px;
+    }
+
     .my-name a {
         font-size: 12px;
     }
@@ -311,6 +318,10 @@
     .my-name a:hover {
         font-size: 14px;
         transition: 0.5s;
+    }
+
+    .my-group {
+        width: 100px;
     }
 
     .my-group a {
@@ -350,7 +361,7 @@
 
     .nav.sp span:nth-of-type(3)::after {
         top: 5px;
-        left: -3.5px;
+        left: -3px;
     }
 
     .nav.sp.active span:nth-of-type(1) {
@@ -375,7 +386,7 @@
     }
 
     .nav.sp ul.active {
-        top: 50px;
+        top: 75px;
         height: calc(100% - 50px);
         padding-top: 1px;
     }

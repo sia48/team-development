@@ -365,7 +365,7 @@
                 </div>
                 <div class="details">
                     <div class="detail">
-                        <textarea class="textarea_store" name="schedule" required></textarea>
+                        <textarea class="textarea_store" name="schedule" required maxlength="100"></textarea>
                     </div>
                 </div>
             </div>
@@ -393,7 +393,7 @@
                                 <p class="my_name">{{ $user->name }}</p>
                                 <p class="validate_edit" style="display:none; color:red">入力できる文字数は100文字までです</p>
                             </div>
-                            <textarea class="textarea_edit textarea_edit{{ $my_schedule->id }}" name="schedule_edit" placeholder="" disabled maxlenght="250">{{ $my_schedule->schedule }}</textarea>
+                            <textarea class="textarea_edit textarea_edit{{ $my_schedule->id }}" name="schedule_edit" placeholder="" disabled maxlength="100">{{ $my_schedule->schedule }}</textarea>
                             <div class="links">
                                 <button type="button" class="link_btn link_edit link_edit{{ $my_schedule->id }}">編集する</button>
                                 <button type="button" class="link_btn link_update link_update{{ $my_schedule->id }}" style="display:none">更新する</button>
@@ -418,7 +418,7 @@
             </div>
             <div class="store_area">
                 <div class="store">
-                    <textarea name="schedule" class="textarea_edit_store" placeholder="新しい予定を登録する場合はこちら" required></textarea>
+                    <textarea name="schedule" class="textarea_edit_store" placeholder="新しい予定を登録する場合はこちら" required maxlength="100"></textarea>
                 </div>
                 <div class="button">
                     <p class="validate_edit_store" style="display:none; color:red">入力できる文字数は100文字までです</p>
@@ -503,9 +503,9 @@
                     <p>ニックネーム</p>
                     <input type="text" name="name" value="{{ $user->name }}" required maxlength="50">
                     <p>パスワード</p>
-                    <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい" minlength="8" class="password">
+                    <input type="password" name="password" placeholder="パスワード変更する場合ご入力下さい" minlength="8" maxlength="128" class="password">
                     <p>パスワード確認</p>
-                    <input type="password" name="password_confirmation" placeholder="もう一度ご入力下さい" minlength="8" class="password2">
+                    <input type="password" name="password_confirmation" placeholder="もう一度ご入力下さい" minlength="8" maxlength="128" class="password2">
                     <li style="display:none; color:red" class="password_error">パスワードとパスワード確認が一致していません</li>
                     <div class="button">
                         <button type="button" class="btn close">キャンセル</button>
