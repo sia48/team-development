@@ -1,5 +1,5 @@
 $(function() { 
-    const url = "http://127.0.0.1:8000";
+    const url = "http://bp-calendar.org";
 
     $('#delete').click(function() {
         var id = $('.group_id').text();
@@ -34,6 +34,9 @@ $(function() {
 
         $.ajax({
             type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             url: url + "/api/search_user/" + user_name, 
             datatype: "text",  
             cache: false
@@ -53,6 +56,9 @@ $(function() {
 
                         $.ajax({
                             type: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             url: url + "/api/inv_user/" + user[0].id + "/" + group_id, 
                             datatype: "text",  
                             cache: false
@@ -129,6 +135,9 @@ $(function() {
 
                             $.ajax({
                                 type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
                                 url: url + "/api/inv_user/" + result[0] + "/" + group_id, 
                                 datatype: "text",  
                                 cache: false
