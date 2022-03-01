@@ -69,7 +69,7 @@
                             <button type="submit">ログアウト</button>
                         </form>
                     </li>
-                    <li><a href=""><i class="far fa-calendar-alt"></i>今月の予定</a></li>
+                    <li><a><i class="far fa-calendar-alt"></i>今月の予定</a></li>
                 </ul>
             </nav> 
         </div>
@@ -80,11 +80,7 @@
             <div class="menu">
                 <p>メニューバー</p>
                 <ul>
-                    <li><a href="">今月の予定</a></li>
-                    <li><a href="">他に</a></li>
-                    <li><a href="">何か</a></li>
-                    <li><a href="">あれば</a></li>
-                    <li><a href="">追加</a></li>
+                    <li><a class="this_month_schedules">今月の予定</a></li>
                     <!-- 追加したらスマホ用のナビゲーション、カレンダーヘッドにも追加 -->
                 </ul>
             </div>
@@ -217,68 +213,6 @@
                             <h2>{{ $month_en[$month] }}</h2>
                         </div>
                     </div>
-                    <div class="calendar-head-right"> <!-- 100vhのレイアウトだと厳しい･･ -->
-                        <div class="next-month-head">
-                            <h3>1</h3>
-                            <p>2022</p>
-                        </div>
-                        <table class="next-month"> 
-                            <tr> 
-                                <th>日</th> 
-                                <th>月</th> 
-                                <th>火</th> 
-                                <th>水</th> 
-                                <th>木</th> 
-                                <th>金</th> 
-                                <th>土</th>
-                            </tr> 
-                            <tr> 
-                                <td></td> 
-                                <td></td> 
-                                <td></td> 
-                                <td>1</td> 
-                                <td>2</td> 
-                                <td>3</td> 
-                                <td>4</td>
-                            </tr> 
-                            <tr> 
-                                <td>5</td> 
-                                <td>6</td> 
-                                <td>7</td> 
-                                <td>8</td> 
-                                <td>9</td> 
-                                <td>10</td> 
-                                <td>11</td> 
-                            </tr> 
-                            <tr> 
-                                <td>12</td> 
-                                <td>13</td> 
-                                <td>14</td> 
-                                <td>15</td> 
-                                <td>16</td> 
-                                <td>17</td> 
-                                <td>18</td> 
-                            </tr>
-                            <tr> 
-                                <td>19</td> 
-                                <td>20</td> 
-                                <td>21</td> 
-                                <td>22</td> 
-                                <td>23</td> 
-                                <td>24</td> 
-                                <td>25</td> 
-                            </tr>
-                            <tr> 
-                                <td>26</td> 
-                                <td>27</td> 
-                                <td>28</td> 
-                                <td>29</td> 
-                                <td>30</td> 
-                                <td>31</td> 
-                                <td></td> 
-                            </tr>
-                        </table>
-                    </div>
                 </div>
                 <table class="this-month"> 
                     <tr> 
@@ -349,6 +283,26 @@
                 </table>
             </div>
         </main>
+    </div>
+
+    <div class="modal" id="this_month_schedule"> <!-- 今月の予定表示用のモーダル -->
+        <div class="top">
+            <h2>今月の予定</h2>
+            <span class="close">x</span>
+        </div>
+        <div class="this_month_schedules_area">
+            @if(count($my_schedules) == 0) 
+                <div class="no_schedule">
+                    <h3>今月の予定は登録されていません</h3>
+                </div>
+            @endif
+            @foreach($my_schedules as $my_schedule)
+                <div class="this_month_schedule">
+                    <h3>{{ $my_schedule->schedule_date }}</h3>
+                    <p>{{ $my_schedule->schedule }}</p>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <div class="modal" id="create"> <!-- 新規登録のモーダル -->

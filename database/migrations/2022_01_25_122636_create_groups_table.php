@@ -15,7 +15,9 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->string('group_name');
+            $table->string('group_name', 50);
+            $table->string('group_image')->default('icon-default-user.svg');
+            $table->bigInteger('created_user_id');
             $table->timestamps();
         });
     }

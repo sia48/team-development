@@ -586,6 +586,25 @@ th {
     width: 30%;
 }
 
+#this_month_schedule {
+    height: 80vh;
+}
+
+#this_month_schedule h2 {
+    display: inline-block;
+}
+
+.no_schedule {
+    margin-top: 20px;
+}
+
+.this_month_schedule {
+    margin-top: 10px;
+    background: beige;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 #edit.modal {
     height: 80vh;
 }
