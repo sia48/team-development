@@ -1,5 +1,5 @@
 $(function() { 
-    const url = "http://127.0.0.1:8000";
+    const url = "http://bp-calendar.org";
 
     $('.nav.sp').click(function () { 
         $(this).toggleClass('active'); 
@@ -63,7 +63,10 @@ $(function() {
         var month = classVals[2];
         
         $.ajax({
-            url: "http://127.0.0.1:8000/api/test/" + day + "/" + group_id + "/" + user_id,
+            url: url + "/" + day + "/" + group_id + "/" + user_id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: 'POST',
             dataType : "text",
             cache: false
