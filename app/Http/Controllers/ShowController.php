@@ -88,6 +88,7 @@ class ShowController extends Controller
         $my_schedules = Schedule::select('id', 'user_id', 'schedule', 'schedule_date')
                     ->where('user_id', '=', $user->id)
                     ->where('schedule_date', 'like', "%$date_key%")
+                    ->orderBy('schedule_date', 'asc')
                     ->get();
 
         if($user->invitation != 0) {

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->bigInteger('group_id')->default(0);
+            $table->string('belongs_group', 100)->nullable();
+            $table->string('invitation', 100)->default(0);
             $table->timestamps();
         });
     }

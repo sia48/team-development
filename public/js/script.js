@@ -14,10 +14,10 @@ $(function() {
         $("#submit_form_month").submit();
     });
 
-    $('my_schedule, my_name').click(function() {
-        $('#profile .overlay').fadeIn();
+    $('.this_month_schedules').click(function() {
+        $('#this_month_schedule, .overlay').fadeIn();
         $('.close, .overlay').click(function() {
-            $('#profile, .overlay').fadeOut();
+            $('#this_month_schedule, .overlay').fadeOut();
         });
     });
 
