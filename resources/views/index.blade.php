@@ -70,7 +70,7 @@
                             <button type="submit">ログアウト</button>
                         </form>
                     </li>
-                    <li><a><i class="far fa-calendar-alt"></i>今月の予定</a></li>
+                    <li><a><i class="far fa-calendar-alt this_month_schedules"></i>今月の予定</a></li>
                 </ul>
             </nav> 
         </div>
