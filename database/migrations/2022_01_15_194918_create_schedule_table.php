@@ -13,8 +13,9 @@ class CreateScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedule', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id');
             $table->string('schedule');
             $table->string('schedule_date', 15);
             $table->timestamps();

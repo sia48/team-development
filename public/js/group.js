@@ -32,11 +32,14 @@ $(function() {
         var user_name = $('.user').val();
         $('.invd').css({'display':'none', 'color':'black'});
 
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $.ajax({
             type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: url + "/api/search_user/" + user_name, 
             datatype: "text",  
             cache: false
@@ -56,9 +59,6 @@ $(function() {
 
                         $.ajax({
                             type: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
                             url: url + "/api/inv_user/" + user[0].id + "/" + group_id, 
                             datatype: "text",  
                             cache: false
@@ -135,9 +135,6 @@ $(function() {
 
                             $.ajax({
                                 type: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
                                 url: url + "/api/inv_user/" + result[0] + "/" + group_id, 
                                 datatype: "text",  
                                 cache: false

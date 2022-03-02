@@ -61,12 +61,15 @@ $(function() {
         var classVals = classVal.split(' ');  
         var year = classVals[1];
         var month = classVals[2];
+
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         
         $.ajax({
             url: url + "/" + day + "/" + group_id + "/" + user_id,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             type: 'POST',
             dataType : "text",
             cache: false
