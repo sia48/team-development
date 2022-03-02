@@ -20,7 +20,7 @@
         <form action="#" method="post" id="form_store" enctype="multipart/form-data">
             @csrf
             <div class="group_image">
-                <img src="{{ asset('img/icon-default-user.svg') }}" alt="グループアイコン">
+                <img src="{{ asset('img/icon-default-user.svg') }}" alt="グループアイコン" id="group_image">
                 <p class="default">デフォルト画像</p>
             </div>
             <div class="flex">
