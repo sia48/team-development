@@ -29,11 +29,6 @@
                         @endif
                     </div>
                 </div>
-                @if($user->invitation > 0)
-                    <div class="group_invitation">
-                        <li class="inv_modal"><a>グループに<br>招待されています</a></li>
-                    </div>
-                @endif
                 @if ($errors->any())
                     @foreach ($errors->all() as $error)
                         <li style="color:red" class="error">{{ $error }}</li>
@@ -42,6 +37,9 @@
             </div>  
             <nav class="nav pc">
                 <ul>
+                    @if($user->invitation > 0)
+                        <li class="inv_modal group_invitation"><a>グループに<br>招待されています</a></li>
+                    @endif
                     <li class="group"><a href="{{ route('group') }}">グループ<br>作成</a></li>
                     <li class="group"><a href="{{ route('group_show') }}">グループ<br>切り替え</a></li>
                     <li class="mf"><a href="{{ route('suito',['year' => $year,'month' => $month]) }}">MF画面へ</a></li>
@@ -54,6 +52,9 @@
                 </ul>
             </nav> 
             <nav class="nav sp">
+                @if($user->invitation > 0)
+                    <div class="inv_modal group_invitation"><a>グループに<br>招待されています</a></div>
+                @endif
                 <div class="hamburger">
                     <span></span>
                     <span></span>
