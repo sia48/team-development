@@ -1,5 +1,5 @@
 $(function() { 
-    const url = "http://bp-calendar.org";
+    const url = "http://127.0.0.1:8000";
 
     $('#delete').click(function() {
         var id = $('.group_id').text();

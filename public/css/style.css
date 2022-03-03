@@ -24,16 +24,18 @@ html {
 .header .inv_modal {
     text-align: center;
     background: beige;
-    padding: 10px;
-    margin-left: 20px;
-    border-radius: 10px;
     cursor: pointer;
     box-shadow: 0 5px 2px gray;
     position: relative;
+    width: 128px;
+    line-height: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
 }
 
 .header .inv_modal a {
     display: block;
+    color: black;
 }
 
 .header .inv_modal:active {
@@ -73,7 +75,7 @@ header .container {
 }
 
 .my-name {
-    width: 300px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
@@ -92,7 +94,7 @@ header .container {
 }
 
 .my-group {
-    width: 300px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
@@ -212,6 +214,7 @@ header .container {
     transition: .3s;
     border-radius: 15px;
     padding: 5px 10px;
+    cursor: pointer;
 }
 
 aside li a:hover {
@@ -252,6 +255,10 @@ aside li a:hover {
 
 .nav-calendar-left a:hover {
     background: #b9cdf1;
+}
+
+.years {
+    margin-bottom: 10px;
 }
 
 .this_month_color {

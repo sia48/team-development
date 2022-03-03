@@ -99,6 +99,15 @@
         display: none;
     }
 
+    .header .inv_modal {
+        position: relative;
+        right: 110px;
+        font-size: 10px;
+        width: 90px;
+        line-height: 1.5;
+        padding-bottom: 10px
+    }
+
     .nav.sp {
         position: relative;
         background: black;

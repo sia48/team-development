@@ -1,5 +1,5 @@
 $(function() { 
-    const url = "http://bp-calendar.org";
+    const url = "http://127.0.0.1:8000";
 
     $('.nav.sp').click(function () { 
         $(this).toggleClass('active'); 
@@ -69,7 +69,7 @@ $(function() {
         });
         
         $.ajax({
-            url: url + "/" + day + "/" + group_id + "/" + user_id,
+            url: url + "/api/test/" + day + "/" + group_id + "/" + user_id,
             type: 'POST',
             dataType : "text",
             cache: false
