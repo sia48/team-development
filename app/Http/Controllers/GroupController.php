@@ -28,6 +28,8 @@ class GroupController extends Controller
         $group->group_name = $request->group_name;
         if(isset($request->group_image)) {
             $group->group_image = str_replace('public/group-image/', '', $request->group_image->store('public/group-image'));
+        } else {
+            $group->group_image = str_replace('public/group-image/', '', 'icon-default-user.svg'->store('public/group-image'));
         }
         $group->created_user_id = Auth::user()->id;
         $group->save();
