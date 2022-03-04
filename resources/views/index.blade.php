@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(config('app.env') === 'production')
-        <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/style.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/responsive.css') }}">
     @else
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
@@ -483,7 +483,7 @@
         </div>
     </div>
     @if(config('app.env') === 'production')
-        <script src="{{ secure_asset('team-development/public/js/script.js') }}"></script>
+        <script src="{{ secure_asset('js/script.js') }}"></script>
     @else
         <script src="{{ asset('js/script.js') }}"></script>
     @endif
