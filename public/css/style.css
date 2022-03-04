@@ -430,9 +430,16 @@ th {
     cursor: pointer;
 }
 
+.my_schedule_red {
+    position: absolute;
+    bottom: 0;
+    color: red;
+}
+
 .has_schedule {
     position: absolute;
     bottom: 0;
+    right: 0;
     color: green;
 }
 

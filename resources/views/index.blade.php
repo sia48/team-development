@@ -262,7 +262,13 @@
                                 </a>
                                 @if(isset($view_schedules))
                                     @foreach($view_schedules as $schedule)
-                                        @if($schedule->schedule_date == $date_modal)
+                                        @if($schedule->schedule_date == $date_modal && $schedule->user_id == $user->id)
+                                            <p class="my_schedule_red">●</p>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @foreach($view_schedules as $schedule)
+                                        @if($schedule->schedule_date == $date_modal && $schedule->user_id != $user->id)
                                             <p class="has_schedule">●</p>
                                             @break
                                         @endif
@@ -271,7 +277,7 @@
                                 @if(empty($view_schedules))
                                     @foreach($my_schedules as $my_schedule)
                                         @if($my_schedule->schedule_date == $date_modal)
-                                            <p class="has_schedule">●</p>
+                                            <p class="my_schedule_red">●</p>
                                             @break
                                         @endif
                                     @endforeach
