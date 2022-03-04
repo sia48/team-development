@@ -12,14 +12,14 @@
 
         <!-- Styles -->
         @if(config('app.env') === 'production')
-            <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/app.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
         @else
             <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         @endif
 
         <!-- Scripts -->
         @if(config('app.env') === 'production')
-            <script src="{{ secure_asset('team-developmet/public/js/app.css') }}" defer></script>
+            <script src="{{ secure_asset('css/app.css') }}" defer></script>
         @else
             <script src="{{ mix('js/app.js') }}" defer></script>
         @endif
