@@ -1,9 +1,9 @@
 $(function() { 
     const url = "http://127.0.0.1:8000";
 
-    $('.nav.sp').click(function () { 
-        $(this).toggleClass('active'); 
-        $(this).find('ul').toggleClass('active');
+    $('.hamburger').click(function () { 
+        $('.nav.sp').toggleClass('active'); 
+        $('.nav.sp').find('ul').toggleClass('active');
     }); 
 
     $("#submit_select_year").change(function(){
