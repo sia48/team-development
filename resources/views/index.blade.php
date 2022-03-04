@@ -5,8 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    @if(config('app.env') === 'production')
+        <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/style.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/responsive.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    @endif
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>ホ-ム</title>
@@ -477,6 +482,10 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/script.js') }}"></script>
+    @if(config('app.env') === 'production')
+        <script src="{{ secure_asset('team-development/public/js/script.js') }}"></script>
+    @else
+        <script src="{{ asset('js/script.js') }}"></script>
+    @endif
 </body>
 </html>
