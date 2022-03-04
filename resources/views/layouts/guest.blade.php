@@ -11,10 +11,19 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        @if(config('app.env') === 'production')
+            <link rel="stylesheet" href="{{ secure_asset('team-developmet/public/css/app.css') }}">
+        @else
+            <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        @endif
 
         <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
+        @if(config('app.env') === 'production')
+            <script src="{{ secure_asset('team-developmet/public/js/app.css') }}" defer></script>
+        @else
+            <script src="{{ mix('js/app.js') }}" defer></script>
+        @endif
+        
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">
