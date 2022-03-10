@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon; //日付のライブラリ
 use Yasumi\Yasumi; //祝日取得のライブラリ
 use App\Models\Suito;
+use DB;
+use Auth;
 
 class SuitoController extends Controller
 {
@@ -23,7 +25,7 @@ class SuitoController extends Controller
             'timeMax' => $end,
             'maxResults' => 50,
             'orderBy' => 'startTime',
-            'singleEvents' => 'true'
+            'singleEvents' => 'true',
         ];
         $google_holidays = [];
         if ($data = file_get_contents($url. http_build_query($query), true)) {
@@ -56,6 +58,7 @@ class SuitoController extends Controller
             $dates[] = $date->copy(); 
         }
 
+        $user = Auth::user();
         //$contents = Suito::where('suito_date', 'like', );
 
         $month_en = [ //英語表記の為の配列
@@ -74,7 +77,80 @@ class SuitoController extends Controller
             'December'
         ];
 
-        return view('Suito.suito', ['dates' => $dates, 'year' => $year, 'month' => $month, 'month_en' => $month_en, 'holidays' => $holidays, 'google_holidays' => $google_holidays]);
+        // suitosテーブル検索 by K
+        $first_day = date('Y-m-d',strtotime($year.'-'.$month.'-01')); // 月の初日 2022-02-01
+        // mktimeの引数0,0,0は時間、分、秒
+        // 月の最後の日付けはバラバラのため現在の月から+1して日付けを-1して取得する
+        // 後ろの0は日付を表している。0は1日よりもう1つ前の日付を指している。これで月の最後の日を取得
+        $last_day = date('Y-m-d',mktime(0,0,0,$month + 1,0,$year)); // 月の初日 2022-02-01
+
+        $suitos = Suito::whereBetween('suito',[$first_day,$last_day])->orderBy('suito','asc')->get();
+        // error_log("SuitoController::suito [".$first_day."],[".$last_day."]");
+        // whereBetweenで今月の初日から期末までの出納テーブルを検索
+        // flag = 2が収入,flag=1が出費
+        $plus_total = Suito::where('flag',2)->whereBetween('suito',[$first_day,$last_day])->sum('money');
+        $minus_total = Suito::where('flag',1)->whereBetween('suito',[$first_day,$last_day])->sum('money');
+        $categories = Suito::where('category')->whereBetween('suito',[$first_day,$last_day]);
+        
+        // $p_daily_total = Suito::where('flag',2)->sum('money');
+        // $m_daily_total = Suito::where('flag',1)->sum('money');
+        $p_daily_total = Suito::select('suito')->selectRaw('SUM(money) as total')->where('flag', '2')->groupby('suito')->whereBetween('suito', [$first_day, $last_day])->get();
+        $m_daily_total = Suito::select('suito')->selectRaw('SUM(money) as total')->where('flag', '1')->groupby('suito')->whereBetween('suito', [$first_day, $last_day])->get();
+
+        /*
+        select A.suito, (ifnull(A.p_total, 0) - ifnull(B.m_total, 0)) as total from
+        (select suito, sum(money) as p_total from suitos where flag = '2' and suito between '2022-03-01' and '2022-03-31' group by suito, flag) as A
+        left outer join (select suito, sum(money) as m_total from suitos where flag = '1' and suito between '2022-03-01' and '2022-03-31' group by suito, flag) as B
+        on A.suito = B.suito
+        */
+
+        // 収入の日毎の合計を出すサブクエリー
+        $subQuery_a = DB::table('suitos', 'A')
+        ->selectRaw('suito, sum(money) as p_total')
+        ->where('flag', '2')
+        ->whereBetween('suito', [$first_day, $last_day])
+        ->groupby('suito', 'flag');
+    
+        // 支出の日毎の合計を出すサブクエリー
+        $subQuery_b = DB::table('suitos', 'B')
+            ->selectRaw('suito, sum(money) as m_total')
+            ->where('flag', '1')
+            ->whereBetween('suito', [$first_day, $last_day])
+            ->groupby('suito', 'flag');
+
+        // 左：収入 右：支出
+        // 収入 - 支出の合計値を出すサブクエリー
+        // ただし収入があるレコードだけ（left outer join
+        $query_f = DB::table($subQuery_a, 'A')
+            ->select(['A.suito', DB::raw('ifnull(A.p_total, 0) - ifnull(B.m_total, 0) as total')])
+            ->leftJoinSub($subQuery_b, "B", 'A.suito', '=', 'B.suito');
+
+        // 収入 - 支出の合計を出すサブクエリー
+        // ただし支出があるレコードだけ（right outer join
+        $query_b = DB::table($subQuery_a, 'A')
+            ->select(['B.suito', DB::raw('ifnull(A.p_total, 0) - ifnull(B.m_total, 0) as total')])
+            ->rightJoinSub($subQuery_b, "B", 'A.suito', '=', 'B.suito');
+        
+        // $query_f と $query_b をunionで和集合を取る
+        $daily_total = $query_f->union($query_b)->orderby('suito', 'asc')->get();
+
+        $view = view('Suito.suito', [
+            'dates' => $dates, 
+            'year' => $year, 
+            'month' => $month, 
+            'month_en' => $month_en, 
+            'holidays' => $holidays, 
+            'google_holidays' => $google_holidays,
+            'user' => $user,
+            'suitos' => $suitos,
+            'plus_total' => $plus_total,
+            'minus_total' => $minus_total,
+            // 'p_daily_total' =>$p_daily_total, 
+            // 'm_daily_total' =>$m_daily_total, 
+            'daily_total' => $daily_total,
+            'categories' => $categories,
+        ]);
+        return $view;
     }
 
     public function requestCalendar(Request $request)
@@ -104,16 +180,18 @@ class SuitoController extends Controller
         return redirect()->route('suito', ['year' => $year, 'month' => $month]);
     }
 
-    public function destroy($year, $month, $id, Request $request)
+    public function suitoDestroy($year,$month,$id)
     {   
         $content = Suito::find($id);
         $content->delete();
-        return redirect()->route('suito', ['year' => $year, 'month' => $month]);
+        return redirect()->route('suito',['year' => $year, 'month' => $month]);
+        // header('Content-Type: application/json; charset=uft-8');
+        // echo json_encode($id);
     }
 
-    public function test($day)
+    public function test($key)
     {   
-        $contents = Suito::where('suito', '=', $day )->get();
+        $contents = Suito::where('suito', '=', $key )->get();
         return $contents;
     }
 
@@ -122,13 +200,14 @@ class SuitoController extends Controller
        $content = new Suito();
 
        $d = str_replace('日', '', $request->suito_date);  // "日"を空文字に置換する
-       $d = str_replace('年', '/', $d); // "年"を"/"に置換する
-       $d = str_replace('月', '/', $d);
+       $d = str_replace('年', '-', $d); // "年"を"/"に置換する
+       $d = str_replace('月', '-', $d);
 
        $content->create([
            'category' => $request->category,
            'money' => $request->money,
            'flag' => $request->flag,
+           'suito' => $d,
            'datetime' => $d
        ]);
 
@@ -137,8 +216,7 @@ class SuitoController extends Controller
     
     public function suitoIncome()
     {
-        $suitos = Suito::find('id', 1)->first();
-        dd($suitos);
-        return view('Suito.suito',['suitos' => $suitos]);
+        $content = Suito::find('money');
+        return view('Suito.suito',['money' => $content]);
     }
 }

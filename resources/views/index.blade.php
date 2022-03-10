@@ -20,10 +20,10 @@
                 </div>
                 <div class="my-user">
                     <div class="my-name">
-                        <a href="">{{ $user->name }}</a>
+                        <a href=""></a>
                     </div>
                     <div class="my-group">
-                        <a href="">{{ $user->group_id }}</a>
+                        <a href=""></a>
                     </div>
                 </div>
             </div>  

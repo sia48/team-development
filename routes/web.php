@@ -51,8 +51,8 @@ Route::get('/suito/{year}/{month}','App\Http\Controllers\SuitoController@showSui
 // MF登録画面
 
 Route::post('/suito_store/{year}/{month}','App\Http\Controllers\SuitoController@suitoStore')->name('suito_store');
-Route::post('/suito_edit/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitoedit')->name('suito_edit'); 
-Route::post('/suito_delete/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitodestroy')->name('suito_delete');
+Route::post('/suito_edit/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitoEdit')->name('suito_edit'); 
+Route::get('/suito_delete/{year}/{month}/{id}', 'App\Http\Controllers\SuitoController@suitoDestroy');
 
 // MF登録合計表示
 Route::get('/suitos/{year}/{month}','App\Http\Controllers\SuitoController@suitoIncome');

@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::any('/test/{day}','App\Http\Controllers\ShowController@test');
 Route::post('/search_user/{userName}','App\Http\Controllers\GroupController@search');
 Route::post('/register/{user_id}','App\Http\Controllers\GroupController@register');
-Route::any('/suito/test/{day}','App\Http\Controllers\SuitoController@test');
+Route::any('/suito/test/{key}','App\Http\Controllers\SuitoController@test');

@@ -11,6 +11,6 @@ class Suito extends Model
     use HasFactory;
 
     protected $fillable = [
-        'category','money','datetime','flag',
+        'category','money','datetime','suito','flag',
     ];
 }
