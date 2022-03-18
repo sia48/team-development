@@ -17,7 +17,7 @@ class ShowController extends Controller
     public function showCalendar($year, $month)
     {   
         /*googleAPI設定////////////////////////////////////////////////////////////////////////////////////////////////*/
-        $key = 'AIzaSyBHn2iBpie5DM5v80qC5M68-XfZn-TlG10';
+        $key = '';
         $calendar_id = urlencode('japanese__ja@holiday.calendar.google.com');  // Googleの提供する日本の祝日カレンダー
         $start = $year . '-' . '01' . '-' . '01' . 'T00:00:00Z'; //2022-01-01 の形にする
         $end = $year . '-' . '12' . '-' . '31' . 'T00:00:00Z'; //2022-12-31の形にする
